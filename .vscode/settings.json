@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "liveServer.settings.port": 8080,
+  "liveServer.settings.root": "/",
+  "emmet.includeLanguages": {
+    "html": "html"
+  }
+}
