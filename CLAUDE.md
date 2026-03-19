@@ -13,7 +13,7 @@
 - **Target hosting**: Cloudflare Pages (free, already on Cloudflare)
 - **DNS**: Managed in Cloudflare — A records still point to HubSpot (199.60.103.169, 199.60.103.69), need to be changed when deploying
 - **SSL**: Cloudflare automatic SSL/TLS
-- **Email**: Cloudflare Email Routing → renestates69@gmail.com (verified destination)
+- **Email**: Cloudflare Email Routing — ALREADY SET UP AND VERIFIED. Destination: renestates69@gmail.com. DO NOT ask about this again.
 
 ## Stripe Payment Links
 - **Ibiza Luxury Property Market Report 2025** (€149): https://buy.stripe.com/bJe9AUbbEc7KgPK93l6EU00
@@ -133,6 +133,30 @@
 3. Delete HubSpot DNS records (A records + CNAME + hubspot TXT)
 4. Cloudflare Pages auto-connects to domain
 5. Email routing already configured
+
+## Landing Page Workflow
+- René designs the landing page in Canva with exact logo/icon placement
+- Exports as full-page PNG
+- Claude converts the Canva design 1:1 into working HTML/CSS
+- This prevents Claude from guessing/approximating the design
+
+## Logo Export Process
+- Export logos from Canva WITH their background (don't try removing in Canva — it kills interior colors)
+- Claude removes background using Python PIL gradient-aware flood-fill
+- Interior colors of logos are preserved perfectly
+
+## Navigation Structure (Updated)
+- Landing page buttons: Intelligence | Publications | **The Estates** | Las Lluvias
+- "The Estates" button → goes to real-estate.html
+- On that page: **Equinox Home** is the brand/logo header for the real estate section
+- Page shows 4-5 property cards (photo + brief hint + "Request Details" → email)
+
+## Communication Rules for Claude
+- DO NOT repeat information René has already confirmed
+- DO NOT ask about email setup — it's done
+- DO NOT ask for permissions — just execute
+- When unsure, state what you'll do and do it — don't ask
+- René prefers action over questions
 
 ## Related Projects
 - **MANDATE product**: 12-page listing intelligence dossier (desktop generator built)
