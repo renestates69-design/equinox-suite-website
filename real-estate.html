@@ -3,9 +3,580 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Equinox Home — Equinox Suite</title>
-  <meta name="description" content="Equinox Home. Curated luxury property listings in Ibiza. Private introductions for qualified buyers.">
-  <link rel="stylesheet" href="style.css">
+  <title>The Estates — Equinox Suite</title>
+  <meta name="description" content="The Estates by Equinox Suite. Interactive property intelligence brochures for ultra-prime Ibiza real estate. Every listing delivered as a full MANDATE dossier.">
+  <link rel="stylesheet" href="style.css?v=3">
+  <style>
+    /* ---- ESTATES PAGE ---- */
+
+    .estates-hero {
+      padding: 160px 40px 80px;
+      text-align: center;
+      background: var(--dark-gradient);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .estates-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(45,79,102,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .estates-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .estates-hero .tagline {
+      font-family: var(--font-heading);
+      font-size: clamp(13px, 1.8vw, 17px);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.8;
+      position: relative;
+    }
+
+    .estates-hero .mandate-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 28px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 40px;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      position: relative;
+    }
+
+    .mandate-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* ---- PROPERTY SECTION ---- */
+    .property-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    /* Property card — the mandate entry */
+    .mandate-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 60px;
+      transition: border-color 0.4s;
+    }
+
+    .mandate-card:hover {
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    /* Card header with cover image and key facts */
+    .mandate-card-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 400px;
+    }
+
+    .mandate-cover {
+      position: relative;
+      overflow: hidden;
+      background: #1a2a3a;
+    }
+
+    .mandate-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .mandate-card:hover .mandate-cover img {
+      transform: scale(1.02);
+    }
+
+    .mandate-details {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .mandate-label {
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    .mandate-name {
+      font-family: var(--font-heading);
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--silver);
+      margin-bottom: 8px;
+    }
+
+    .mandate-location {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 28px;
+    }
+
+    .mandate-price {
+      font-family: var(--font-heading);
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--silver-light);
+      margin-bottom: 32px;
+    }
+
+    .mandate-stats {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+
+    .mandate-stat {
+      text-align: center;
+    }
+
+    .mandate-stat-value {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--silver);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .mandate-stat-label {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .mandate-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin-bottom: 28px;
+    }
+
+    .mandate-intelligence-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .intel-tag {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      color: var(--text-dim);
+    }
+
+    /* Flipbook viewer embedded in card */
+    .mandate-flipbook {
+      padding: 40px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: none;
+    }
+
+    .mandate-flipbook.open {
+      display: block;
+    }
+
+    .flipbook-viewer {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      aspect-ratio: 1654 / 2339;
+      background: rgba(255,255,255,0.02);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.35),
+        0 0 0 1px rgba(255,255,255,0.05);
+    }
+
+    .flipbook-page {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .flipbook-page.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .flipbook-page img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .flip-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 35%;
+      z-index: 10;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .flip-zone.prev { left: 0; }
+    .flip-zone.next { right: 0; }
+    .flip-zone:hover { background: rgba(255,255,255,0.015); }
+
+    .fullscreen-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 20;
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.45);
+      color: rgba(255,255,255,0.65);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .fullscreen-btn:hover {
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+    }
+
+    .flipbook-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 20px;
+      user-select: none;
+    }
+
+    .flip-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--silver);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .flip-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .flip-btn:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+
+    .page-indicator {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      min-width: 70px;
+      text-align: center;
+    }
+
+    .flipbook-progress {
+      width: 100%;
+      max-width: 680px;
+      height: 2px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 1px;
+      margin: 14px auto 0;
+      overflow: hidden;
+    }
+
+    .flipbook-progress-fill {
+      height: 100%;
+      background: rgba(255,255,255,0.25);
+      border-radius: 1px;
+      transition: width 0.4s ease;
+    }
+
+    .flipbook-thumbs {
+      display: flex;
+      gap: 6px;
+      margin: 16px auto 0;
+      max-width: 680px;
+      overflow-x: auto;
+      padding: 6px 2px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.12) transparent;
+    }
+
+    .flipbook-thumbs::-webkit-scrollbar { height: 3px; }
+    .flipbook-thumbs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+
+    .thumb-btn {
+      flex-shrink: 0;
+      width: 40px;
+      height: 56px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.35;
+      transition: all 0.25s ease;
+      padding: 0;
+      background: none;
+    }
+
+    .thumb-btn.active {
+      opacity: 1;
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    .thumb-btn:hover { opacity: 0.7; }
+
+    .thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .flipbook-hint {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    @media (pointer: coarse) {
+      .flipbook-hint { display: none; }
+    }
+
+    .flipbook-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 8px 20px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-dim);
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .flipbook-download:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.18);
+      color: var(--silver);
+    }
+
+    .flipbook-actions {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Open brochure button */
+    .open-brochure-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 40px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      color: var(--silver);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .open-brochure-btn:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    .open-brochure-btn .arrow {
+      transition: transform 0.3s ease;
+      font-size: 0.75rem;
+    }
+
+    .open-brochure-btn.expanded .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Enquiry button */
+    .mandate-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 48px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .mandate-card-footer .enquiry-text {
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    /* CTA section */
+    .estates-cta {
+      text-align: center;
+      padding: 40px 40px 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .estates-cta p {
+      font-family: var(--font-heading);
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    /* Fullscreen viewer styles */
+    .flipbook-viewer:fullscreen,
+    .flipbook-viewer:-webkit-full-screen {
+      background: #141e2a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .mandate-card-header {
+        grid-template-columns: 1fr;
+      }
+
+      .mandate-cover {
+        min-height: 280px;
+      }
+
+      .mandate-details {
+        padding: 32px;
+      }
+
+      .mandate-flipbook {
+        padding: 24px 16px;
+      }
+
+      .mandate-card-footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+        padding: 24px 32px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .property-section {
+        padding: 48px 16px;
+      }
+
+      .estates-hero {
+        padding: 120px 24px 60px;
+      }
+
+      .mandate-details {
+        padding: 24px;
+      }
+
+      .mandate-stats {
+        gap: 20px;
+      }
+
+      .mandate-flipbook {
+        padding: 20px 8px;
+      }
+
+      .flip-zone { width: 28%; }
+    }
+  </style>
 </head>
 <body>
 
@@ -20,72 +591,102 @@
     </ul>
   </nav>
 
-  <!-- HEADER -->
-  <header class="subpage-header">
+  <!-- HERO -->
+  <header class="estates-hero">
     <h1>The Estates</h1>
-    <p>Luxury properties in Ibiza</p>
+    <p class="tagline">
+      Every property presented as a full intelligence dossier.<br>
+      Not a listing. A MANDATE.
+    </p>
+    <div class="mandate-badge">Powered by MANDATE Intelligence</div>
   </header>
 
-  <!-- CONTENT -->
-  <section class="content">
+  <!-- PROPERTIES -->
+  <section class="property-section">
 
-    <div class="glass-card" style="margin-bottom: 48px;">
-      <p class="card-text">
-        A curated selection of off-market and exclusive properties in Ibiza.
-        Full details, viewings, and acquisition support are provided on a private basis.
-        Contact us to receive a complete briefing.
-      </p>
-    </div>
+    <!-- MANDATE: Casa Pura -->
+    <div class="mandate-card" id="casaPura">
 
-    <!-- Listing 1 -->
-    <div class="listing">
-      <img src="images/property-1.png" alt="Luxury villa Ibiza">
-      <div class="listing-info">
-        <h3>Seafront Villa — Santa Eulalia</h3>
-        <div class="listing-meta">5 Bedrooms &middot; 420m&sup2; &middot; Direct Sea Access</div>
-        <p>
-          A contemporary masterpiece positioned directly on the Mediterranean.
-          Floor-to-ceiling glazing, infinity pool, and private mooring.
-          Unobstructed sunrise views across the sea.
-        </p>
-        <a href="mailto:rene@equinox-suite.com?subject=Enquiry%3A%20Seafront%20Villa%20Santa%20Eulalia" class="btn">Request Details</a>
+      <div class="mandate-card-header">
+        <div class="mandate-cover">
+          <img src="images/mandate-pura/page-02.jpg" alt="Casa Pura — Cala Jondal, Ibiza">
+        </div>
+        <div class="mandate-details">
+          <div class="mandate-label">Mandate Intelligence Dossier</div>
+          <h2 class="mandate-name">Casa Pura</h2>
+          <div class="mandate-location">Cala Jondal &middot; Ibiza, Balearic Islands</div>
+          <div class="mandate-price">&euro; 3,750,000</div>
+          <div class="mandate-stats">
+            <div class="mandate-stat">
+              <span class="mandate-stat-value">6</span>
+              <span class="mandate-stat-label">Bedrooms</span>
+            </div>
+            <div class="mandate-stat">
+              <span class="mandate-stat-value">6</span>
+              <span class="mandate-stat-label">Bathrooms</span>
+            </div>
+            <div class="mandate-stat">
+              <span class="mandate-stat-value">218</span>
+              <span class="mandate-stat-label">m&sup2; Build</span>
+            </div>
+            <div class="mandate-stat">
+              <span class="mandate-stat-value">3,000</span>
+              <span class="mandate-stat-label">m&sup2; Plot</span>
+            </div>
+          </div>
+          <div class="mandate-divider"></div>
+          <div class="mandate-intelligence-tags">
+            <span class="intel-tag">Valuation &amp; AVM</span>
+            <span class="intel-tag">Buyer Intelligence</span>
+            <span class="intel-tag">Yield Analysis</span>
+            <span class="intel-tag">Legal &amp; Fiscal</span>
+            <span class="intel-tag">Risk Assessment</span>
+            <span class="intel-tag">FX Strategy</span>
+          </div>
+          <button class="open-brochure-btn" id="togglePura" onclick="toggleFlipbook('pura')">
+            Open Intelligence Brochure <span class="arrow">&#9662;</span>
+          </button>
+        </div>
       </div>
-    </div>
 
-    <!-- Listing 2 -->
-    <div class="listing">
-      <img src="images/property-2.jpg" alt="Luxury estate Ibiza">
-      <div class="listing-info">
-        <h3>Casa Lichtenstein — Hipp Village</h3>
-        <div class="listing-meta">6 Bedrooms &middot; 580m&sup2; &middot; Pool &amp; Garden</div>
-        <p>
-          An architectural estate set within a private hillside enclave.
-          Expansive living spaces, mature gardens, and panoramic views
-          over the western coastline. A rare offering in a sought-after micro-location.
-        </p>
-        <a href="mailto:rene@equinox-suite.com?subject=Enquiry%3A%20Casa%20Lichtenstein" class="btn">Request Details</a>
-      </div>
-    </div>
+      <!-- Embedded Flipbook -->
+      <div class="mandate-flipbook" id="flipbook-pura">
+        <div class="flipbook-viewer" id="viewer-pura">
+          <button class="fullscreen-btn" onclick="toggleFullscreen('pura')" title="Fullscreen">&#x26F6;</button>
+          <div class="flip-zone prev" onclick="flipPage('pura', -1)"></div>
+          <div class="flip-zone next" onclick="flipPage('pura', 1)"></div>
+        </div>
 
-    <!-- Listing 3 -->
-    <div class="listing">
-      <img src="images/property-3.jpeg" alt="Luxury property Ibiza">
-      <div class="listing-info">
-        <h3>Private Compound — Es Cubells</h3>
-        <div class="listing-meta">4 Bedrooms &middot; 350m&sup2; &middot; Clifftop Position</div>
-        <p>
-          Perched above the cliffs of Es Cubells with uninterrupted views to Formentera.
-          Minimalist design, natural stone, and absolute privacy.
-          One of the last remaining plots in this protected zone.
-        </p>
-        <a href="mailto:rene@equinox-suite.com?subject=Enquiry%3A%20Es%20Cubells%20Compound" class="btn">Request Details</a>
+        <div class="flipbook-controls">
+          <button class="flip-btn" id="prev-pura" onclick="flipPage('pura', -1)">&larr;</button>
+          <span class="page-indicator" id="indicator-pura">1 / 16</span>
+          <button class="flip-btn" id="next-pura" onclick="flipPage('pura', 1)">&rarr;</button>
+        </div>
+
+        <div class="flipbook-progress">
+          <div class="flipbook-progress-fill" id="progress-pura" style="width: 6.25%"></div>
+        </div>
+
+        <div class="flipbook-thumbs" id="thumbs-pura"></div>
+
+        <div class="flipbook-hint">Arrow keys or swipe to navigate</div>
+
+        <div class="flipbook-actions">
+          <a href="Mandate_Pura.pdf" download class="flipbook-download">&#8595; Download Full PDF</a>
+        </div>
       </div>
+
+      <div class="mandate-card-footer">
+        <span class="enquiry-text">16 pages of property intelligence &middot; Market data, legal, fiscal, yield &amp; risk analysis</span>
+        <a href="mailto:rene@equinox-suite.com?subject=Enquiry%3A%20Casa%20Pura%20%E2%80%94%20Cala%20Jondal" class="btn">Request Private Briefing</a>
+      </div>
+
     </div>
 
     <!-- CTA -->
-    <div style="text-align: center; margin-top: 48px;">
-      <p class="card-text" style="margin-bottom: 24px;">Looking for something specific? We source properties that never reach the open market.</p>
-      <a href="mailto:rene@equinox-suite.com?subject=Private%20Estate%20Search" class="btn btn-primary">Contact Us</a>
+    <div class="estates-cta">
+      <p>Each property receives a bespoke MANDATE dossier &mdash; 16 pages of intelligence covering valuation, legal, fiscal, yield, risk, and buyer profiling. No other agency delivers this.</p>
+      <a href="mailto:rene@equinox-suite.com?subject=MANDATE%20Property%20Intelligence" class="btn btn-primary">Commission a MANDATE</a>
     </div>
 
   </section>
@@ -93,7 +694,7 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-logo">Equinox Suite</div>
-    <div class="footer-tagline">One platform. Many sovereign tools.</div>
+    <div class="footer-tagline">Property Intelligence &middot; On Demand</div>
     <div class="footer-pills">
       <span class="footer-pill">Clarity</span>
       <span class="footer-pill">Action</span>
@@ -106,9 +707,149 @@
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
+  (function() {
+    // Flipbook engine — supports multiple mandates
+    var books = {};
+    var PAGES = {
+      pura: { total: 16, folder: 'images/mandate-pura/', prefix: 'page-' }
+    };
+
+    // Initialize all flipbooks
+    Object.keys(PAGES).forEach(function(id) {
+      var cfg = PAGES[id];
+      books[id] = { current: 1, total: cfg.total };
+
+      var viewer = document.getElementById('viewer-' + id);
+      var thumbStrip = document.getElementById('thumbs-' + id);
+
+      // Build pages
+      for (var i = 1; i <= cfg.total; i++) {
+        var pageDiv = document.createElement('div');
+        pageDiv.className = 'flipbook-page' + (i === 1 ? ' active' : '');
+        pageDiv.dataset.page = i;
+
+        var img = document.createElement('img');
+        img.src = cfg.folder + cfg.prefix + String(i).padStart(2, '0') + '.jpg';
+        img.alt = 'Page ' + i;
+        img.loading = i <= 2 ? 'eager' : 'lazy';
+        pageDiv.appendChild(img);
+        viewer.appendChild(pageDiv);
+
+        // Thumbnail
+        var thumb = document.createElement('button');
+        thumb.className = 'thumb-btn' + (i === 1 ? ' active' : '');
+        var thumbImg = document.createElement('img');
+        thumbImg.src = img.src;
+        thumbImg.alt = 'Page ' + i;
+        thumbImg.loading = 'lazy';
+        thumb.appendChild(thumbImg);
+        (function(page) {
+          thumb.addEventListener('click', function() { goToPage(id, page); });
+        })(i);
+        thumbStrip.appendChild(thumb);
+      }
+    });
+
+    // Navigation
+    window.flipPage = function(id, dir) {
+      var book = books[id];
+      goToPage(id, book.current + dir);
+    };
+
+    function goToPage(id, n) {
+      var book = books[id];
+      if (n < 1 || n > book.total || n === book.current) return;
+
+      var viewer = document.getElementById('viewer-' + id);
+      var pages = viewer.querySelectorAll('.flipbook-page');
+      pages[book.current - 1].classList.remove('active');
+      book.current = n;
+      pages[book.current - 1].classList.add('active');
+      updateUI(id);
+    }
+
+    function updateUI(id) {
+      var book = books[id];
+      document.getElementById('indicator-' + id).textContent = book.current + ' / ' + book.total;
+      document.getElementById('progress-' + id).style.width = ((book.current / book.total) * 100) + '%';
+      document.getElementById('prev-' + id).disabled = book.current === 1;
+      document.getElementById('next-' + id).disabled = book.current === book.total;
+
+      var thumbs = document.getElementById('thumbs-' + id).querySelectorAll('.thumb-btn');
+      thumbs.forEach(function(t, i) {
+        t.classList.toggle('active', i === book.current - 1);
+      });
+      if (thumbs[book.current - 1]) {
+        thumbs[book.current - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    // Toggle flipbook open/close
+    window.toggleFlipbook = function(id) {
+      var section = document.getElementById('flipbook-' + id);
+      var btn = document.getElementById('toggle' + id.charAt(0).toUpperCase() + id.slice(1));
+      section.classList.toggle('open');
+      btn.classList.toggle('expanded');
+
+      if (section.classList.contains('open')) {
+        setTimeout(function() {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    };
+
+    // Fullscreen
+    window.toggleFullscreen = function(id) {
+      var viewer = document.getElementById('viewer-' + id);
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else if (viewer.requestFullscreen) {
+        viewer.requestFullscreen();
+      } else if (viewer.webkitRequestFullscreen) {
+        viewer.webkitRequestFullscreen();
+      }
+    };
+
+    // Keyboard navigation — uses whichever flipbook is open
+    document.addEventListener('keydown', function(e) {
+      var openId = null;
+      Object.keys(books).forEach(function(id) {
+        var section = document.getElementById('flipbook-' + id);
+        if (section && section.classList.contains('open')) openId = id;
+      });
+      if (!openId) return;
+
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); flipPage(openId, -1); }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); flipPage(openId, 1); }
+      if (e.key === 'Home') { e.preventDefault(); goToPage(openId, 1); }
+      if (e.key === 'End') { e.preventDefault(); goToPage(openId, books[openId].total); }
+    });
+
+    // Touch swipe on viewers
+    Object.keys(books).forEach(function(id) {
+      var viewer = document.getElementById('viewer-' + id);
+      var startX = 0, startY = 0;
+
+      viewer.addEventListener('touchstart', function(e) {
+        startX = e.changedTouches[0].screenX;
+        startY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      viewer.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].screenX - startX;
+        var dy = e.changedTouches[0].screenY - startY;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+          if (dx < 0) flipPage(id, 1);
+          else flipPage(id, -1);
+        }
+      }, { passive: true });
+    });
+
+    // Nav scroll
+    window.addEventListener('scroll', function() {
       document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
     });
+  })();
   </script>
 
 </body>
