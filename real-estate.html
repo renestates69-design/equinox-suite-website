@@ -567,11 +567,24 @@
       }
 
       .mandate-stats {
-        gap: 20px;
+        gap: 16px;
+        flex-wrap: wrap;
       }
 
       .mandate-flipbook {
         padding: 20px 8px;
+      }
+
+      .mandate-card-footer {
+        padding: 20px 16px;
+      }
+
+      .mandate-card-footer .enquiry-text {
+        font-size: 11px;
+      }
+
+      .estates-cta {
+        padding: 32px 16px 0;
       }
 
       .flip-zone { width: 28%; }
@@ -583,7 +596,10 @@
   <!-- NAV -->
   <nav class="nav" id="nav">
     <a href="index.html" class="nav-logo">Equinox Suite</a>
-    <ul class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="intelligence.html">Intelligence</a></li>
       <li><a href="publications.html">Publications</a></li>
       <li><a href="real-estate.html">The Estates</a></li>
@@ -848,6 +864,18 @@
     // Nav scroll
     window.addEventListener('scroll', function() {
       document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Mobile nav toggle
+    document.getElementById('navToggle').addEventListener('click', function() {
+      this.classList.toggle('open');
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        document.getElementById('navToggle').classList.remove('open');
+        document.getElementById('navLinks').classList.remove('open');
+      });
     });
   })();
   </script>

@@ -11,8 +11,11 @@
 
   <!-- NAV -->
   <nav class="nav" id="nav">
-    <div class="nav-logo">Equinox Suite</div>
-    <ul class="nav-links">
+    <a href="index.html" class="nav-logo">Equinox Suite</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="intelligence.html">Intelligence</a></li>
       <li><a href="publications.html">Publications</a></li>
       <li><a href="real-estate.html">The Estates</a></li>
@@ -62,9 +65,18 @@
   </footer>
 
   <script>
-    // Nav scroll effect
     window.addEventListener('scroll', () => {
       document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    });
+    document.getElementById('navToggle').addEventListener('click', function() {
+      this.classList.toggle('open');
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('navToggle').classList.remove('open');
+        document.getElementById('navLinks').classList.remove('open');
+      });
     });
   </script>
 
