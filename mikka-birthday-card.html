@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mikka Birthday Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #e8ddd0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .card-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* --- FRONT COVER --- */
+  .card-front {
+    width: 420px;
+    height: 580px;
+    background: linear-gradient(180deg, #f5f0e8 0%, #ffffff 30%, #ffffff 70%, #f5f0e8 100%);
+    border-radius: 12px;
+    box-shadow: 4px 6px 20px rgba(0,0,0,0.25);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  /* Blue border frame */
+  .card-front::before {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border: 2px solid #3a6a8a;
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .card-front::after {
+    content: '';
+    position: absolute;
+    top: 16px; left: 16px; right: 16px; bottom: 16px;
+    border: 1px solid #3a6a8a;
+    border-radius: 6px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Swedish flag circle */
+  .swedish-flag {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #006AA7;
+    overflow: hidden;
+    z-index: 3;
+    border: 2px solid #c9b97a;
+  }
+
+  .swedish-flag::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 11px;
+    width: 6px;
+    height: 100%;
+    background: #FECC02;
+  }
+
+  .swedish-flag::after {
+    content: '';
+    position: absolute;
+    top: 13px; left: 0;
+    width: 100%;
+    height: 6px;
+    background: #FECC02;
+  }
+
+  /* Dala horse (emoji placeholder) */
+  .dala-horse {
+    font-size: 22px;
+    position: absolute;
+    z-index: 3;
+  }
+
+  .dala-horse.top-right {
+    top: 26px;
+    right: 30px;
+  }
+
+  .dala-horse.bottom-center {
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Corner fleur-de-lis */
+  .corner-fleur {
+    position: absolute;
+    font-size: 18px;
+    color: #8a8a7a;
+    z-index: 3;
+  }
+
+  .corner-fleur.bl { bottom: 22px; left: 22px; }
+  .corner-fleur.br { bottom: 22px; right: 22px; }
+
+  .card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 52px;
+    color: #243b53;
+    letter-spacing: 6px;
+    margin-top: 30px;
+    z-index: 3;
+    text-transform: uppercase;
+  }
+
+  .card-subtitle-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2px;
+    z-index: 3;
+  }
+
+  .card-subtitle-line .line {
+    width: 40px;
+    height: 1px;
+    background: #3a6a8a;
+  }
+
+  .card-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #5a7a8a;
+    letter-spacing: 2px;
+  }
+
+  .card-from {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: #6a5a3a;
+    margin-top: 4px;
+    z-index: 3;
+  }
+
+  /* Photo area */
+  .photo-frame {
+    width: 320px;
+    height: 340px;
+    margin-top: 10px;
+    border: 2px solid #3a6a8a;
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 3;
+    background: linear-gradient(180deg, #d4c8b0 0%, #e8ddd0 50%, #8ab0c4 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-placeholder {
+    text-align: center;
+    color: #7a7a6a;
+    font-size: 14px;
+    padding: 20px;
+  }
+
+  .photo-placeholder .icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  /* --- INSIDE PAGE --- */
+  .card-inside {
+    width: 420px;
+    height: 580px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 4px 6px 20px rgba(0,0,0,0.25);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 40px;
+  }
+
+  /* Gold + blue double border */
+  .card-inside::before {
+    content: '';
+    position: absolute;
+    top: 14px; left: 14px; right: 14px; bottom: 14px;
+    border: 1.5px solid #c9b97a;
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  .card-inside::after {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px; right: 20px; bottom: 20px;
+    border: 1px solid #3a6a8a;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  .inside-fleur {
+    position: absolute;
+    font-size: 22px;
+    color: #8a8a7a;
+    z-index: 3;
+  }
+
+  .inside-fleur.top-right { top: 26px; right: 28px; }
+  .inside-fleur.bottom-center { bottom: 26px; left: 50%; transform: translateX(-50%); }
+
+  .inside-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: #5a5a4a;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .inside-text .greeting {
+    margin-bottom: 24px;
+  }
+
+  .inside-text .wish {
+    margin-bottom: 24px;
+  }
+
+  .inside-text .miss {
+    margin-bottom: 30px;
+  }
+
+  .inside-text .sign {
+    font-style: italic;
+  }
+
+  .print-instructions {
+    margin-top: 30px;
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+    }
+    .card-container {
+      gap: 0;
+    }
+    .card-front, .card-inside {
+      box-shadow: none;
+      page-break-after: always;
+    }
+    .print-instructions {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+
+  <!-- FRONT COVER -->
+  <div class="card-front">
+    <!-- Swedish flag -->
+    <div class="swedish-flag"></div>
+
+    <!-- Dala horse top-right -->
+    <div class="dala-horse top-right">🐴</div>
+
+    <!-- Corner fleur-de-lis -->
+    <span class="corner-fleur bl">&#9884;</span>
+    <span class="corner-fleur br">&#9884;</span>
+
+    <!-- Title -->
+    <div class="card-title">MIKKA</div>
+
+    <div class="card-subtitle-line">
+      <span class="line"></span>
+      <span class="card-subtitle">the Swedish M</span>
+      <span class="line"></span>
+    </div>
+
+    <div class="card-from">From Uncle Ren&eacute;</div>
+
+    <!-- Photo -->
+    <div class="photo-frame">
+      <!-- Replace the placeholder below with: <img src="mikka-photo.jpg" alt="Mikka"> -->
+      <div class="photo-placeholder">
+        <span class="icon">📷</span>
+        Place Mikka's photo here<br>
+        <small>(replace this div with an &lt;img&gt; tag)</small>
+      </div>
+    </div>
+
+    <!-- Dala horse bottom -->
+    <div class="dala-horse bottom-center">🐴</div>
+  </div>
+
+  <!-- INSIDE PAGE -->
+  <div class="card-inside">
+    <span class="inside-fleur top-right">&#9884;</span>
+    <span class="inside-fleur bottom-center">&#9884;</span>
+
+    <div class="inside-text">
+      <div class="greeting">To my wonderful<br>Godson, Mikka.</div>
+      <div class="wish">May your life be full of<br>light and happiness.</div>
+      <div class="miss">I miss you!</div>
+      <div class="sign">Love,<br>Uncle Ren&eacute;</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="print-instructions">To save as PDF: Press Ctrl+P (or Cmd+P) → "Save as PDF"</p>
+
+</body>
+</html>
