@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FontSense — Semantic Typography Engine</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f0f;
+  --surface: #161616;
+  --border: #222;
+  --border-hover: #333;
+  --text: #e0e0e0;
+  --text-dim: #777;
+  --text-muted: #444;
+  --pill-bg: #1a1a1a;
+  --pill-border: #333;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 48px 20px 40px;
+}
+
+.container {
+  width: 100%;
+  max-width: 720px;
+}
+
+/* Header */
+.header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.header h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.header p {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* API Key */
+.api-key-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.api-key-row input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.api-key-row input:focus {
+  border-color: var(--border-hover);
+}
+
+.api-key-row input::placeholder {
+  color: var(--text-muted);
+}
+
+.api-key-row button {
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.api-key-row button:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.api-key-row button.saved {
+  border-color: #1a4a2a;
+  color: #4a9;
+}
+
+/* Search */
+.search-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.search-row input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.search-row input:focus {
+  border-color: var(--border-hover);
+}
+
+.search-row input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-row button {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.search-row button:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.search-row button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Status */
+.status {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 24px;
+  min-height: 16px;
+}
+
+.status.error {
+  color: #c44;
+}
+
+/* Results */
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+}
+
+.card-specimen {
+  padding: 40px 24px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-specimen .word {
+  font-size: 56px;
+  line-height: 1.2;
+  color: var(--text);
+  transition: opacity 0.3s;
+}
+
+.card-specimen .word.loading {
+  opacity: 0.2;
+}
+
+.card-specimen .font-error {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: #c44;
+}
+
+.card-body {
+  padding: 20px 24px;
+}
+
+.card-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.card-rationale {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #999;
+  margin-bottom: 14px;
+}
+
+.card-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+/* Collapsible attribute profile */
+.attr-toggle {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+
+.attr-toggle:hover {
+  color: var(--text-dim);
+}
+
+.attr-toggle .arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 8px;
+}
+
+.attr-toggle.open .arrow {
+  transform: rotate(90deg);
+}
+
+.attr-profile {
+  display: none;
+  padding-top: 12px;
+}
+
+.attr-profile.open {
+  display: block;
+}
+
+.attr-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.attr-bar-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-muted);
+  width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+
+.attr-bar-track {
+  flex: 1;
+  height: 4px;
+  background: #1a1a1a;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.attr-bar-fill {
+  height: 100%;
+  background: #444;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.attr-bar-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--text-muted);
+  width: 28px;
+  flex-shrink: 0;
+}
+
+/* Footer */
+.footer {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer p {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .card-specimen .word { font-size: 36px; }
+  .card-specimen { padding: 28px 16px; }
+  .card-body { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>FontSense</h1>
+    <p>Semantic typography engine &middot; FontCLIP &middot; 37 attributes</p>
+  </div>
+
+  <div class="api-key-row">
+    <input type="password" id="apiKeyInput" placeholder="Anthropic API key (sk-ant-...)" autocomplete="off">
+    <button id="saveKeyBtn" onclick="saveKey()">Save</button>
+  </div>
+
+  <div class="search-row">
+    <input type="text" id="queryInput" placeholder="Enter a word or short phrase..." autofocus>
+    <button id="searchBtn" onclick="runQuery()">Sense</button>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="results" id="results"></div>
+
+  <div class="footer">
+    <p>Semantic scoring based on the FontCLIP framework (Tatsukawa et al., 2024)<br>
+    and the O'Donovan crowdsourced font attribute dataset (2014).</p>
+  </div>
+</div>
+
+<script>
+// -- API Key --
+const apiKeyInput = document.getElementById('apiKeyInput');
+const saveKeyBtn = document.getElementById('saveKeyBtn');
+const queryInput = document.getElementById('queryInput');
+const searchBtn = document.getElementById('searchBtn');
+const statusEl = document.getElementById('status');
+const resultsEl = document.getElementById('results');
+
+// Restore key from sessionStorage
+const storedKey = sessionStorage.getItem('anthropic_key');
+if (storedKey) {
+  apiKeyInput.value = storedKey;
+  saveKeyBtn.textContent = 'Saved';
+  saveKeyBtn.classList.add('saved');
+}
+
+function saveKey() {
+  const key = apiKeyInput.value.trim();
+  if (!key) return;
+  sessionStorage.setItem('anthropic_key', key);
+  saveKeyBtn.textContent = 'Saved';
+  saveKeyBtn.classList.add('saved');
+  setTimeout(() => {
+    saveKeyBtn.textContent = 'Save';
+    saveKeyBtn.classList.remove('saved');
+  }, 2000);
+}
+
+// -- Query --
+queryInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') runQuery();
+});
+
+const SYSTEM_PROMPT = `You are a semantic typography engine trained on the FontCLIP attribute framework (Tatsukawa et al., 2024) and the O'Donovan crowdsourced font attribute dataset (2014).
+
+You operate across 37 typographic attributes divided into two categories:
+
+STRUCTURAL / FORMAL ATTRIBUTES:
+serif, sans-serif, italic, cursive, monospace, capitals, display, thin, bold, condensed, extended, geometric, humanist, rounded, angular, high-contrast, low-contrast, decorative, script
+
+PERCEPTUAL / EMOTIONAL ATTRIBUTES (scored 0–100):
+friendly, warm, happy, elegant, dramatic, legible, calm, corporate, playful, feminine, masculine, modern, retro/vintage, luxurious, technical, organic, rigid, delicate, strong, authoritative, trustworthy, creative, formal, casual, energetic
+
+For each input word or phrase:
+
+1. Internally score the word across all 37 attributes, identifying the 5–8 most dominant dimensions.
+2. When the input is abstract, emotional, or conceptual, weight perceptual/emotional attributes more heavily than structural ones.
+3. Use the dominant attributes to reason toward 5 specific Google Fonts whose typographic character best matches that attribute profile.
+4. Choose only real, currently available Google Fonts. Prefer well-known, widely used fonts.
+
+Return ONLY a JSON array of exactly 5 objects. No preamble, no markdown fences, no explanation outside the JSON.
+
+Each object schema:
+{
+  "name": "<Google Font name exactly as listed on fonts.google.com>",
+  "dominant_attributes": ["<attr1>", "<attr2>", "<attr3>", "<attr4>", "<attr5>"],
+  "rationale": "<One sentence tying these specific attributes back to the meaning of the input word.>",
+  "attribute_scores": {
+    "<attr1>": <score 0-100>,
+    "<attr2>": <score 0-100>,
+    "<attr3>": <score 0-100>
+  }
+}
+
+Include only the top 3–5 attribute scores that drove the selection in attribute_scores, not all 37.
+
+Return ONLY the JSON array. Nothing else.`;
+
+async function runQuery() {
+  const key = sessionStorage.getItem('anthropic_key');
+  if (!key) {
+    statusEl.textContent = 'Enter and save your Anthropic API key first.';
+    statusEl.className = 'status error';
+    return;
+  }
+
+  const query = queryInput.value.trim();
+  if (!query) return;
+
+  searchBtn.disabled = true;
+  statusEl.textContent = 'Scoring across 37 attributes...';
+  statusEl.className = 'status';
+  resultsEl.innerHTML = '';
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2048,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: query }]
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `API error ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text;
+
+    if (!text) throw new Error('Empty response from API.');
+
+    let fonts;
+    try {
+      fonts = JSON.parse(text);
+    } catch {
+      // Try extracting JSON from possible markdown wrapper
+      const match = text.match(/\[[\s\S]*\]/);
+      if (match) {
+        fonts = JSON.parse(match[0]);
+      } else {
+        throw new Error('Could not parse font recommendations.');
+      }
+    }
+
+    if (!Array.isArray(fonts) || fonts.length === 0) {
+      throw new Error('No font recommendations returned.');
+    }
+
+    statusEl.textContent = `${fonts.length} recommendations for "${query}"`;
+    renderResults(fonts, query);
+
+  } catch (err) {
+    statusEl.textContent = err.message;
+    statusEl.className = 'status error';
+  } finally {
+    searchBtn.disabled = false;
+  }
+}
+
+function renderResults(fonts, query) {
+  resultsEl.innerHTML = '';
+
+  fonts.forEach((font, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const fontFamily = font.name;
+    const fontId = `font-${i}`;
+    const attrId = `attr-${i}`;
+
+    // Build attribute bars
+    const scores = font.attribute_scores || {};
+    let barsHTML = '';
+    for (const [attr, score] of Object.entries(scores)) {
+      barsHTML += `
+        <div class="attr-bar-row">
+          <div class="attr-bar-label">${attr}</div>
+          <div class="attr-bar-track">
+            <div class="attr-bar-fill" style="width: ${score}%"></div>
+          </div>
+          <div class="attr-bar-value">${score}</div>
+        </div>`;
+    }
+
+    // Build pills
+    const pills = (font.dominant_attributes || [])
+      .map(a => `<span class="pill">${a}</span>`)
+      .join('');
+
+    card.innerHTML = `
+      <div class="card-specimen">
+        <div class="word loading" id="${fontId}" style="font-family: '${fontFamily}', sans-serif;">${escapeHTML(query)}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${escapeHTML(fontFamily)}</div>
+        <div class="card-rationale">${escapeHTML(font.rationale || '')}</div>
+        <div class="card-pills">${pills}</div>
+        <button class="attr-toggle" onclick="toggleAttr(this, '${attrId}')">
+          <span class="arrow">&#9654;</span> Attribute profile
+        </button>
+        <div class="attr-profile" id="${attrId}">
+          ${barsHTML}
+        </div>
+      </div>`;
+
+    resultsEl.appendChild(card);
+
+    // Load font dynamically
+    loadFont(fontFamily, fontId);
+  });
+}
+
+function loadFont(fontName, elementId) {
+  const el = document.getElementById(elementId);
+  const encoded = fontName.replace(/ /g, '+');
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = `https://fonts.googleapis.com/css2?family=${encoded}:wght@400;700&display=swap`;
+
+  link.onload = () => {
+    // Give browser a moment to apply the font
+    document.fonts.ready.then(() => {
+      el.classList.remove('loading');
+    });
+  };
+
+  link.onerror = () => {
+    el.classList.remove('loading');
+    el.innerHTML = `<span class="font-error">Font "${fontName}" could not be loaded</span>`;
+  };
+
+  document.head.appendChild(link);
+
+  // Timeout fallback in case fonts.ready doesn't fire for this specific font
+  setTimeout(() => {
+    el.classList.remove('loading');
+  }, 4000);
+}
+
+function toggleAttr(btn, id) {
+  const profile = document.getElementById(id);
+  btn.classList.toggle('open');
+  profile.classList.toggle('open');
+}
+
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+</script>
+
+</body>
+</html>
