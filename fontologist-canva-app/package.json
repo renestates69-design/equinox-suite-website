@@ -1,7 +1,7 @@
 {
-  "name": "fontsense-canva-app",
+  "name": "the-fontologist",
   "version": "1.0.0",
-  "description": "FontSense — Semantic typography engine for Canva (Equinox Suite)",
+  "description": "The Fontologist — AI font intelligence by Equinox Design",
   "private": true,
   "scripts": {
     "start": "canva-apps start",
