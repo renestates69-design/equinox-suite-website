@@ -5,8 +5,22 @@
 <title>The Fontologist — Featured Image</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Cormorant:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
+/* The Seasons font — replace this with the actual font file path on your Mac */
+@font-face {
+  font-family: 'The Seasons';
+  src: url('fonts/TheSeasons-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'The Seasons';
+  src: url('fonts/TheSeasons-It.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -56,17 +70,17 @@ body {
 }
 
 .brand-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 64px;
-  font-weight: 300;
-  letter-spacing: 0.06em;
+  font-family: 'The Seasons', 'Cormorant', serif;
+  font-size: 72px;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.03em;
   color: #e0e5ed;
   line-height: 1.1;
 }
 
 .brand-title em {
   font-style: italic;
-  font-weight: 400;
 }
 
 .brand-tagline {
