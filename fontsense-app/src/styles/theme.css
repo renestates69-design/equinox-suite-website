@@ -1,103 +1,115 @@
-/* FontSense — Equinox Suite Theme for Canva App */
+/* The Fontologist — Equinox Design Theme for Canva App */
 
 :root {
-  --fs-navy: #243b53;
-  --fs-teal: #2a4a3e;
-  --fs-silver: #e0e5ed;
-  --fs-silver-light: #f0f2f6;
-  --fs-text-dim: rgba(255,255,255,0.65);
-  --fs-text-faint: rgba(255,255,255,0.35);
-  --fs-glass: rgba(255,255,255,0.09);
-  --fs-glass-border: rgba(255,255,255,0.18);
-  --fs-glass-border-dim: rgba(255,255,255,0.10);
+  --fo-navy: #243b53;
+  --fo-teal: #2a4a3e;
+  --fo-silver: #e0e5ed;
+  --fo-silver-light: #f0f2f6;
+  --fo-text-dim: rgba(255,255,255,0.65);
+  --fo-text-faint: rgba(255,255,255,0.35);
+  --fo-glass: rgba(255,255,255,0.09);
+  --fo-glass-border: rgba(255,255,255,0.18);
+  --fo-glass-border-dim: rgba(255,255,255,0.10);
 }
 
-.fontsense-panel {
+.fontologist-panel {
   background: linear-gradient(160deg, #2a4560 0%, #325770 30%, #2f5548 70%, #274a38 100%);
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
-  color: var(--fs-silver);
+  color: var(--fo-silver);
   min-height: 100%;
   padding: 16px;
 }
 
-.fontsense-header {
+.fontologist-header {
   text-align: center;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--fs-glass-border-dim);
+  border-bottom: 1px solid var(--fo-glass-border-dim);
 }
 
-.fontsense-header h2 {
+.fontologist-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.fontologist-header h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
   font-weight: 300;
-  letter-spacing: 0.12em;
-  color: var(--fs-silver);
+  letter-spacing: 0.08em;
+  color: var(--fo-silver);
 }
 
-.fontsense-header p {
-  font-size: 9px;
+.fontologist-header h2 em {
+  font-style: italic;
   font-weight: 400;
-  letter-spacing: 0.2em;
+}
+
+.fontologist-header p {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--fs-text-faint);
+  color: var(--fo-text-faint);
   margin-top: 4px;
 }
 
-.fontsense-card {
-  background: var(--fs-glass);
-  border: 1px solid var(--fs-glass-border-dim);
+.fontologist-card {
+  background: var(--fo-glass);
+  border: 1px solid var(--fo-glass-border-dim);
   border-radius: 10px;
   backdrop-filter: blur(12px);
   margin-bottom: 12px;
   overflow: hidden;
 }
 
-.fontsense-card-specimen {
+.fontologist-card-specimen {
   padding: 24px 12px;
   text-align: center;
-  border-bottom: 1px solid var(--fs-glass-border-dim);
+  border-bottom: 1px solid var(--fo-glass-border-dim);
   background: rgba(0,0,0,0.1);
 }
 
-.fontsense-card-specimen .word {
+.fontologist-card-specimen .word {
   font-size: 32px;
   line-height: 1.3;
-  color: var(--fs-silver-light);
+  color: var(--fo-silver-light);
 }
 
-.fontsense-card-body {
+.fontologist-card-body {
   padding: 14px;
 }
 
-.fontsense-card-name {
+.fontologist-card-name {
   font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--fs-text-dim);
+  color: var(--fo-text-dim);
   margin-bottom: 6px;
 }
 
-.fontsense-pill {
+.fontologist-pill {
   display: inline-block;
   font-size: 8px;
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--fs-text-faint);
-  border: 1px solid var(--fs-glass-border-dim);
+  color: var(--fo-text-faint);
+  border: 1px solid var(--fo-glass-border-dim);
   padding: 2px 7px;
   border-radius: 12px;
   margin: 2px 3px 2px 0;
 }
 
-.fontsense-apply-btn {
+.fontologist-apply-btn {
   width: 100%;
   margin-top: 8px;
-  background: var(--fs-glass);
-  border: 1px solid var(--fs-glass-border);
+  background: var(--fo-glass);
+  border: 1px solid var(--fo-glass-border);
   border-radius: 6px;
   padding: 8px;
   font-family: 'Montserrat', sans-serif;
@@ -105,11 +117,11 @@
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--fs-silver);
+  color: var(--fo-silver);
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.fontsense-apply-btn:hover {
+.fontologist-apply-btn:hover {
   background: rgba(255,255,255,0.13);
 }

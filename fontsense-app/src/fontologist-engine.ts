@@ -1,13 +1,13 @@
 /**
- * FontSense Scoring Engine
- * Shared logic for Claude API calls using FontCLIP attribute framework.
+ * The Fontologist — Scoring Engine
+ * Internal logic only. No methodology is exposed to the end user.
  */
 
 export interface FontRecommendation {
   name: string;
-  dominant_attributes: string[];
+  qualities: string[];
   rationale: string;
-  attribute_scores: Record<string, number>;
+  match_strength: Record<string, number>;
 }
 
 const SYSTEM_PROMPT = `You are a semantic typography engine trained on the FontCLIP attribute framework (Tatsukawa et al., 2024) and the O'Donovan crowdsourced font attribute dataset (2014).
@@ -32,20 +32,22 @@ Return ONLY a JSON array of exactly 5 objects. No preamble, no markdown fences, 
 Each object schema:
 {
   "name": "<Google Font name exactly as listed on fonts.google.com>",
-  "dominant_attributes": ["<attr1>", "<attr2>", "<attr3>", "<attr4>", "<attr5>"],
-  "rationale": "<One sentence tying these specific attributes back to the meaning of the input word.>",
-  "attribute_scores": {
-    "<attr1>": <score 0-100>,
-    "<attr2>": <score 0-100>,
-    "<attr3>": <score 0-100>
+  "qualities": ["<quality1>", "<quality2>", "<quality3>", "<quality4>", "<quality5>"],
+  "rationale": "<One sentence explaining why this typeface suits the input — reference the feeling and character of the font, NOT the scoring method or attributes by name.>",
+  "match_strength": {
+    "<quality1>": <score 0-100>,
+    "<quality2>": <score 0-100>,
+    "<quality3>": <score 0-100>
   }
 }
 
-Include only the top 3–5 attribute scores that drove the selection in attribute_scores, not all 37.
+IMPORTANT: In "qualities" and "rationale", use natural descriptive language — words like "refined", "grounded", "fluid", "structured", etc. Do NOT use technical attribute names from the scoring system. The user should feel like they are getting expert typographic intuition, not a technical readout.
+
+Include only the top 3–5 match strengths that drove the selection.
 
 Return ONLY the JSON array. Nothing else.`;
 
-export async function queryFontSense(
+export async function queryFontologist(
   apiKey: string,
   word: string
 ): Promise<FontRecommendation[]> {
@@ -74,13 +76,13 @@ export async function queryFontSense(
 
   const data = await response.json();
   const text = (data as { content?: { text?: string }[] }).content?.[0]?.text;
-  if (!text) throw new Error("Empty response from API.");
+  if (!text) throw new Error("Empty response.");
 
   try {
     return JSON.parse(text);
   } catch {
     const match = text.match(/\[[\s\S]*\]/);
     if (match) return JSON.parse(match[0]);
-    throw new Error("Could not parse font recommendations.");
+    throw new Error("Could not parse recommendations.");
   }
 }

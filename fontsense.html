@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FontSense — Equinox Suite</title>
+<title>The Fontologist — by Equinox Design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -12,6 +12,7 @@
 
 :root {
   --navy: #243b53;
+  --navy-deep: #1a2b42;
   --teal: #2a4a3e;
   --dark-gradient: linear-gradient(160deg, #2a4560 0%, #325770 30%, #2f5548 70%, #274a38 100%);
   --silver: #e0e5ed;
@@ -60,38 +61,51 @@ body {
 }
 
 .header-logo {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 16px;
-  opacity: 0.7;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .header-logo img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .header h1 {
   font-family: var(--font-heading);
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 300;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: var(--silver);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.header h1 span {
-  font-weight: 500;
+.header h1 em {
+  font-style: italic;
+  font-weight: 400;
 }
 
 .header .tagline {
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--text-faint);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.header .byline {
+  font-family: var(--font-body);
+  font-size: 9px;
   font-weight: 400;
   color: var(--text-faint);
-  letter-spacing: 0.25em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+  margin-top: 6px;
+  opacity: 0.7;
 }
 
 /* ---- Glass panel ---- */
@@ -320,7 +334,7 @@ body {
   border-radius: 20px;
 }
 
-/* ---- Collapsible attribute profile ---- */
+/* ---- Collapsible match detail ---- */
 .attr-toggle {
   font-family: var(--font-body);
   font-size: 10px;
@@ -408,38 +422,25 @@ body {
   margin-top: 48px;
   padding-top: 24px;
   border-top: 1px solid var(--glass-border-dim);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
+  text-align: center;
 }
 
 .footer-brand {
   font-family: var(--font-heading);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  letter-spacing: 0.12em;
   color: var(--text-faint);
+  margin-bottom: 6px;
 }
 
-.footer-attribution {
+.footer-sub {
   font-family: var(--font-body);
   font-size: 9px;
   font-weight: 300;
   color: var(--text-faint);
-  line-height: 1.7;
-  letter-spacing: 0.03em;
-  max-width: 420px;
-  text-align: right;
-}
-
-.footer-pills {
-  display: flex;
-  gap: 6px;
-  margin-top: 8px;
-  justify-content: flex-end;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
 }
 
 /* ---- Responsive ---- */
@@ -449,10 +450,9 @@ body {
   .card-specimen .word { font-size: 36px; }
   .card-specimen { padding: 28px 16px; }
   .card-body { padding: 16px; }
-  .header h1 { font-size: 26px; }
+  .header h1 { font-size: 28px; }
+  .header-logo { width: 60px; height: 60px; }
   .footer { flex-direction: column; text-align: center; }
-  .footer-attribution { text-align: center; }
-  .footer-pills { justify-content: center; }
   .api-key-row { flex-direction: column; }
   .search-row { flex-direction: column; }
 }
@@ -464,22 +464,23 @@ body {
 
   <!-- Header -->
   <div class="header">
-    <div class="header-logo" id="logoSlot">
-      <!-- Logo placeholder — drop in later -->
+    <div class="header-logo">
+      <img src="images/fontologist-logo.png" alt="The Fontologist">
     </div>
-    <h1>Font<span>Sense</span></h1>
-    <div class="tagline">Semantic Typography Engine</div>
+    <h1>The <em>Fontologist</em></h1>
+    <div class="tagline">Describe your vision. Get the perfect typeface.</div>
+    <div class="byline">by Equinox Design</div>
   </div>
 
   <!-- Input panel -->
   <div class="glass-panel">
     <div class="api-key-row">
-      <input type="password" id="apiKeyInput" placeholder="Anthropic API key (sk-ant-...)" autocomplete="off">
+      <input type="password" id="apiKeyInput" placeholder="API key" autocomplete="off">
       <button class="btn-glass" id="saveKeyBtn" onclick="saveKey()">Save Key</button>
     </div>
     <div class="search-row">
-      <input type="text" id="queryInput" placeholder="Enter a word or phrase..." autofocus>
-      <button class="btn-glass" id="searchBtn" onclick="runQuery()">Sense</button>
+      <input type="text" id="queryInput" placeholder="A word, a mood, a concept..." autofocus>
+      <button class="btn-glass" id="searchBtn" onclick="runQuery()">Find Fonts</button>
     </div>
   </div>
 
@@ -490,18 +491,8 @@ body {
 
   <!-- Footer -->
   <div class="footer">
-    <div class="footer-brand">Equinox Suite</div>
-    <div>
-      <div class="footer-attribution">
-        Semantic scoring based on the FontCLIP framework (Tatsukawa et al., 2024)
-        and the O'Donovan crowdsourced font attribute dataset (2014).
-      </div>
-      <div class="footer-pills">
-        <span class="pill">FontCLIP 2024</span>
-        <span class="pill">37 Attributes</span>
-        <span class="pill">Google Fonts</span>
-      </div>
-    </div>
+    <div class="footer-brand">The Fontologist</div>
+    <div class="footer-sub">AI-powered font intelligence by Equinox Design</div>
   </div>
 
 </div>
@@ -515,7 +506,7 @@ const statusEl = document.getElementById('status');
 const resultsEl = document.getElementById('results');
 
 // Restore key
-const storedKey = sessionStorage.getItem('anthropic_key');
+const storedKey = sessionStorage.getItem('fontologist_key');
 if (storedKey) {
   apiKeyInput.value = storedKey;
   saveKeyBtn.textContent = 'Saved';
@@ -525,7 +516,7 @@ if (storedKey) {
 function saveKey() {
   const key = apiKeyInput.value.trim();
   if (!key) return;
-  sessionStorage.setItem('anthropic_key', key);
+  sessionStorage.setItem('fontologist_key', key);
   saveKeyBtn.textContent = 'Saved';
   saveKeyBtn.classList.add('saved');
   setTimeout(() => {
@@ -538,6 +529,8 @@ queryInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') runQuery();
 });
 
+// The scoring methodology stays hidden — this is the secret sauce.
+// User never sees attribute names, framework references, or scoring method.
 const SYSTEM_PROMPT = `You are a semantic typography engine trained on the FontCLIP attribute framework (Tatsukawa et al., 2024) and the O'Donovan crowdsourced font attribute dataset (2014).
 
 You operate across 37 typographic attributes divided into two categories:
@@ -560,23 +553,25 @@ Return ONLY a JSON array of exactly 5 objects. No preamble, no markdown fences, 
 Each object schema:
 {
   "name": "<Google Font name exactly as listed on fonts.google.com>",
-  "dominant_attributes": ["<attr1>", "<attr2>", "<attr3>", "<attr4>", "<attr5>"],
-  "rationale": "<One sentence tying these specific attributes back to the meaning of the input word.>",
-  "attribute_scores": {
-    "<attr1>": <score 0-100>,
-    "<attr2>": <score 0-100>,
-    "<attr3>": <score 0-100>
+  "qualities": ["<quality1>", "<quality2>", "<quality3>", "<quality4>", "<quality5>"],
+  "rationale": "<One sentence explaining why this typeface suits the input — reference the feeling and character of the font, NOT the scoring method or attributes by name.>",
+  "match_strength": {
+    "<quality1>": <score 0-100>,
+    "<quality2>": <score 0-100>,
+    "<quality3>": <score 0-100>
   }
 }
 
-Include only the top 3–5 attribute scores that drove the selection in attribute_scores, not all 37.
+IMPORTANT: In "qualities" and "rationale", use natural descriptive language — words like "refined", "grounded", "fluid", "structured", etc. Do NOT use technical attribute names from the scoring system. The user should feel like they're getting expert typographic intuition, not a technical readout.
+
+Include only the top 3–5 match strengths that drove the selection.
 
 Return ONLY the JSON array. Nothing else.`;
 
 async function runQuery() {
-  const key = sessionStorage.getItem('anthropic_key');
+  const key = sessionStorage.getItem('fontologist_key');
   if (!key) {
-    statusEl.textContent = 'Save your Anthropic API key first';
+    statusEl.textContent = 'Enter your API key first';
     statusEl.className = 'status error';
     return;
   }
@@ -585,7 +580,7 @@ async function runQuery() {
   if (!query) return;
 
   searchBtn.disabled = true;
-  statusEl.textContent = 'Scoring across 37 attributes\u2026';
+  statusEl.textContent = 'Reading the meaning\u2026';
   statusEl.className = 'status';
   resultsEl.innerHTML = '';
 
@@ -613,7 +608,7 @@ async function runQuery() {
 
     const data = await response.json();
     const text = data.content?.[0]?.text;
-    if (!text) throw new Error('Empty response from API.');
+    if (!text) throw new Error('Empty response.');
 
     let fonts;
     try {
@@ -621,14 +616,14 @@ async function runQuery() {
     } catch {
       const match = text.match(/\[[\s\S]*\]/);
       if (match) fonts = JSON.parse(match[0]);
-      else throw new Error('Could not parse font recommendations.');
+      else throw new Error('Could not parse recommendations.');
     }
 
     if (!Array.isArray(fonts) || fonts.length === 0) {
-      throw new Error('No font recommendations returned.');
+      throw new Error('No recommendations returned.');
     }
 
-    statusEl.textContent = fonts.length + ' recommendations for \u201c' + escapeHTML(query) + '\u201d';
+    statusEl.textContent = fonts.length + ' typefaces for \u201c' + escapeHTML(query) + '\u201d';
     renderResults(fonts, query);
 
   } catch (err) {
@@ -649,17 +644,20 @@ function renderResults(fonts, query) {
     const fontId = 'font-' + i;
     const attrId = 'attr-' + i;
 
-    const scores = font.attribute_scores || {};
+    // Use "match_strength" (hidden scoring) for the bar chart
+    const scores = font.match_strength || font.attribute_scores || {};
     let barsHTML = '';
-    for (const [attr, score] of Object.entries(scores)) {
+    for (const [label, score] of Object.entries(scores)) {
       barsHTML += '<div class="attr-bar-row">'
-        + '<div class="attr-bar-label">' + escapeHTML(attr) + '</div>'
+        + '<div class="attr-bar-label">' + escapeHTML(label) + '</div>'
         + '<div class="attr-bar-track"><div class="attr-bar-fill" style="width:' + score + '%"></div></div>'
         + '<div class="attr-bar-value">' + score + '</div>'
         + '</div>';
     }
 
-    const pills = (font.dominant_attributes || [])
+    // Use "qualities" (natural language) for pills
+    const qualities = font.qualities || font.dominant_attributes || [];
+    const pills = qualities
       .map(a => '<span class="pill">' + escapeHTML(a) + '</span>')
       .join('');
 
@@ -671,7 +669,7 @@ function renderResults(fonts, query) {
       + '<div class="card-rationale">' + escapeHTML(font.rationale || '') + '</div>'
       + '<div class="card-pills">' + pills + '</div>'
       + '<button class="attr-toggle" onclick="toggleAttr(this,\'' + attrId + '\')">'
-      + '<span class="arrow">&#9654;</span> Attribute profile</button>'
+      + '<span class="arrow">&#9654;</span> Match detail</button>'
       + '<div class="attr-profile" id="' + attrId + '">' + barsHTML + '</div>'
       + '</div>';
 
