@@ -3,34 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FontSense — Semantic Typography Engine</title>
+<title>FontSense — Equinox Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0f0f0f;
-  --surface: #161616;
-  --border: #222;
-  --border-hover: #333;
-  --text: #e0e0e0;
-  --text-dim: #777;
-  --text-muted: #444;
-  --pill-bg: #1a1a1a;
-  --pill-border: #333;
+  --navy: #243b53;
+  --teal: #2a4a3e;
+  --dark-gradient: linear-gradient(160deg, #2a4560 0%, #325770 30%, #2f5548 70%, #274a38 100%);
+  --silver: #e0e5ed;
+  --silver-light: #f0f2f6;
+  --text-light: rgba(255,255,255,0.92);
+  --text-dim: rgba(255,255,255,0.65);
+  --text-faint: rgba(255,255,255,0.35);
+  --glass: rgba(255,255,255,0.09);
+  --glass-strong: rgba(255,255,255,0.13);
+  --glass-border: rgba(255,255,255,0.18);
+  --glass-border-dim: rgba(255,255,255,0.10);
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Montserrat', -apple-system, sans-serif;
 }
 
 html, body {
   height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text-light);
+  font-family: var(--font-body);
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
 }
 
 body {
+  background: var(--dark-gradient);
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,260 +48,294 @@ body {
 
 .container {
   width: 100%;
-  max-width: 720px;
+  max-width: 760px;
 }
 
-/* Header */
+/* ---- Header ---- */
 .header {
-  margin-bottom: 40px;
   text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--glass-border-dim);
+}
+
+.header-logo {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  opacity: 0.7;
+}
+
+.header-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .header h1 {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 28px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--silver);
   margin-bottom: 6px;
 }
 
-.header p {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  font-weight: 300;
-  color: var(--text-muted);
-  letter-spacing: 0.12em;
+.header h1 span {
+  font-weight: 500;
+}
+
+.header .tagline {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-faint);
+  letter-spacing: 0.25em;
   text-transform: uppercase;
 }
 
-/* API Key */
+/* ---- Glass panel ---- */
+.glass-panel {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.2);
+}
+
+/* ---- API Key ---- */
 .api-key-row {
   display: flex;
-  gap: 8px;
-  margin-bottom: 32px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .api-key-row input {
   flex: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--glass-border-dim);
+  border-radius: 6px;
   padding: 10px 14px;
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-body);
   font-size: 12px;
-  color: var(--text);
+  font-weight: 300;
+  color: var(--silver);
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.2s;
+  letter-spacing: 0.03em;
 }
 
 .api-key-row input:focus {
-  border-color: var(--border-hover);
+  border-color: var(--glass-border);
 }
 
 .api-key-row input::placeholder {
-  color: var(--text-muted);
+  color: var(--text-faint);
 }
 
-.api-key-row button {
-  background: #1a1a1a;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 10px 16px;
-  font-family: 'DM Mono', monospace;
+.btn-glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-family: var(--font-body);
   font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--silver);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
   white-space: nowrap;
 }
 
-.api-key-row button:hover {
-  border-color: var(--border-hover);
-  color: var(--text);
+.btn-glass:hover {
+  background: var(--glass-strong);
+  border-color: rgba(255,255,255,0.28);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
-.api-key-row button.saved {
-  border-color: #1a4a2a;
-  color: #4a9;
+.btn-glass:active {
+  transform: scale(0.98);
 }
 
-/* Search */
+.btn-glass.saved {
+  border-color: rgba(120,200,160,0.4);
+  color: rgba(120,200,160,0.9);
+}
+
+/* ---- Search ---- */
 .search-row {
   display: flex;
-  gap: 8px;
-  margin-bottom: 40px;
+  gap: 10px;
 }
 
 .search-row input {
   flex: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 14px 18px;
-  font-family: 'DM Sans', sans-serif;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--glass-border-dim);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 300;
-  color: var(--text);
+  color: var(--silver-light);
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.2s;
+  letter-spacing: 0.02em;
 }
 
 .search-row input:focus {
-  border-color: var(--border-hover);
+  border-color: var(--glass-border);
 }
 
 .search-row input::placeholder {
-  color: var(--text-muted);
+  color: var(--text-faint);
+  font-weight: 200;
 }
 
-.search-row button {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 14px 24px;
-  font-family: 'DM Mono', monospace;
+.search-row .btn-glass {
+  padding: 16px 28px;
   font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  cursor: pointer;
-  transition: all 0.15s;
+  border-radius: 8px;
 }
 
-.search-row button:hover {
-  border-color: var(--border-hover);
-  color: var(--text);
-}
-
-.search-row button:disabled {
-  opacity: 0.4;
+.search-row .btn-glass:disabled {
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
-/* Status */
+/* ---- Status ---- */
 .status {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-body);
   font-size: 11px;
-  color: var(--text-muted);
+  font-weight: 300;
+  color: var(--text-faint);
   text-align: center;
-  margin-bottom: 24px;
-  min-height: 16px;
+  margin: 20px 0 8px;
+  min-height: 18px;
+  letter-spacing: 0.04em;
 }
 
 .status.error {
-  color: #c44;
+  color: rgba(200,100,100,0.8);
 }
 
-/* Results */
+/* ---- Results ---- */
 .results {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border-dim);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   overflow: hidden;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
 .card:hover {
-  border-color: var(--border-hover);
+  border-color: var(--glass-border);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
 .card-specimen {
-  padding: 40px 24px;
+  padding: 44px 24px;
   text-align: center;
-  border-bottom: 1px solid var(--border);
-  min-height: 120px;
+  border-bottom: 1px solid var(--glass-border-dim);
+  min-height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0,0,0,0.12);
 }
 
 .card-specimen .word {
   font-size: 56px;
   line-height: 1.2;
-  color: var(--text);
-  transition: opacity 0.3s;
+  color: var(--silver-light);
+  transition: opacity 0.4s;
 }
 
 .card-specimen .word.loading {
-  opacity: 0.2;
+  opacity: 0.15;
 }
 
 .card-specimen .font-error {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-body);
   font-size: 11px;
-  color: #c44;
+  font-weight: 300;
+  color: rgba(200,100,100,0.7);
 }
 
 .card-body {
-  padding: 20px 24px;
+  padding: 22px 24px 24px;
 }
 
 .card-name {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-dim);
   margin-bottom: 10px;
 }
 
 .card-rationale {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 300;
-  line-height: 1.6;
-  color: #999;
+  line-height: 1.7;
+  color: var(--text-dim);
   margin-bottom: 14px;
 }
 
 .card-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 14px;
 }
 
 .pill {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-body);
   font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border: 1px solid var(--pill-border);
-  background: var(--pill-bg);
-  padding: 3px 8px;
-  border-radius: 2px;
-}
-
-/* Collapsible attribute profile */
-.attr-toggle {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-faint);
+  border: 1px solid var(--glass-border-dim);
+  background: rgba(255,255,255,0.04);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* ---- Collapsible attribute profile ---- */
+.attr-toggle {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
   background: none;
   border: none;
   cursor: pointer;
   padding: 4px 0;
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: color 0.15s;
+  gap: 7px;
+  transition: color 0.2s;
 }
 
 .attr-toggle:hover {
@@ -312,7 +354,7 @@ body {
 
 .attr-profile {
   display: none;
-  padding-top: 12px;
+  padding-top: 14px;
 }
 
 .attr-profile.open {
@@ -322,15 +364,15 @@ body {
 .attr-bar-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: 12px;
+  margin-bottom: 9px;
 }
 
 .attr-bar-label {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-body);
   font-size: 10px;
-  font-weight: 400;
-  color: var(--text-muted);
+  font-weight: 300;
+  color: var(--text-faint);
   width: 100px;
   text-align: right;
   flex-shrink: 0;
@@ -339,83 +381,132 @@ body {
 
 .attr-bar-track {
   flex: 1;
-  height: 4px;
-  background: #1a1a1a;
+  height: 3px;
+  background: rgba(255,255,255,0.06);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .attr-bar-fill {
   height: 100%;
-  background: #444;
+  background: rgba(224,229,237,0.3);
   border-radius: 2px;
-  transition: width 0.4s ease;
+  transition: width 0.5s ease;
 }
 
 .attr-bar-value {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 300;
-  color: var(--text-muted);
+  color: var(--text-faint);
   width: 28px;
   flex-shrink: 0;
 }
 
-/* Footer */
+/* ---- Footer ---- */
 .footer {
   margin-top: 48px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid var(--glass-border-dim);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.footer p {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
+.footer-brand {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.footer-attribution {
+  font-family: var(--font-body);
+  font-size: 9px;
   font-weight: 300;
-  color: var(--text-muted);
+  color: var(--text-faint);
   line-height: 1.7;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+  max-width: 420px;
+  text-align: right;
 }
 
-/* Responsive */
-@media (max-width: 520px) {
+.footer-pills {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 560px) {
+  body { padding: 24px 12px 32px; }
+  .glass-panel { padding: 20px 16px; }
   .card-specimen .word { font-size: 36px; }
   .card-specimen { padding: 28px 16px; }
   .card-body { padding: 16px; }
+  .header h1 { font-size: 26px; }
+  .footer { flex-direction: column; text-align: center; }
+  .footer-attribution { text-align: center; }
+  .footer-pills { justify-content: center; }
+  .api-key-row { flex-direction: column; }
+  .search-row { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
 <div class="container">
+
+  <!-- Header -->
   <div class="header">
-    <h1>FontSense</h1>
-    <p>Semantic typography engine &middot; FontCLIP &middot; 37 attributes</p>
+    <div class="header-logo" id="logoSlot">
+      <!-- Logo placeholder — drop in later -->
+    </div>
+    <h1>Font<span>Sense</span></h1>
+    <div class="tagline">Semantic Typography Engine</div>
   </div>
 
-  <div class="api-key-row">
-    <input type="password" id="apiKeyInput" placeholder="Anthropic API key (sk-ant-...)" autocomplete="off">
-    <button id="saveKeyBtn" onclick="saveKey()">Save</button>
-  </div>
-
-  <div class="search-row">
-    <input type="text" id="queryInput" placeholder="Enter a word or short phrase..." autofocus>
-    <button id="searchBtn" onclick="runQuery()">Sense</button>
+  <!-- Input panel -->
+  <div class="glass-panel">
+    <div class="api-key-row">
+      <input type="password" id="apiKeyInput" placeholder="Anthropic API key (sk-ant-...)" autocomplete="off">
+      <button class="btn-glass" id="saveKeyBtn" onclick="saveKey()">Save Key</button>
+    </div>
+    <div class="search-row">
+      <input type="text" id="queryInput" placeholder="Enter a word or phrase..." autofocus>
+      <button class="btn-glass" id="searchBtn" onclick="runQuery()">Sense</button>
+    </div>
   </div>
 
   <div class="status" id="status"></div>
 
+  <!-- Results -->
   <div class="results" id="results"></div>
 
+  <!-- Footer -->
   <div class="footer">
-    <p>Semantic scoring based on the FontCLIP framework (Tatsukawa et al., 2024)<br>
-    and the O'Donovan crowdsourced font attribute dataset (2014).</p>
+    <div class="footer-brand">Equinox Suite</div>
+    <div>
+      <div class="footer-attribution">
+        Semantic scoring based on the FontCLIP framework (Tatsukawa et al., 2024)
+        and the O'Donovan crowdsourced font attribute dataset (2014).
+      </div>
+      <div class="footer-pills">
+        <span class="pill">FontCLIP 2024</span>
+        <span class="pill">37 Attributes</span>
+        <span class="pill">Google Fonts</span>
+      </div>
+    </div>
   </div>
+
 </div>
 
 <script>
-// -- API Key --
 const apiKeyInput = document.getElementById('apiKeyInput');
 const saveKeyBtn = document.getElementById('saveKeyBtn');
 const queryInput = document.getElementById('queryInput');
@@ -423,7 +514,7 @@ const searchBtn = document.getElementById('searchBtn');
 const statusEl = document.getElementById('status');
 const resultsEl = document.getElementById('results');
 
-// Restore key from sessionStorage
+// Restore key
 const storedKey = sessionStorage.getItem('anthropic_key');
 if (storedKey) {
   apiKeyInput.value = storedKey;
@@ -438,12 +529,11 @@ function saveKey() {
   saveKeyBtn.textContent = 'Saved';
   saveKeyBtn.classList.add('saved');
   setTimeout(() => {
-    saveKeyBtn.textContent = 'Save';
+    saveKeyBtn.textContent = 'Save Key';
     saveKeyBtn.classList.remove('saved');
-  }, 2000);
+  }, 2200);
 }
 
-// -- Query --
 queryInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') runQuery();
 });
@@ -486,7 +576,7 @@ Return ONLY the JSON array. Nothing else.`;
 async function runQuery() {
   const key = sessionStorage.getItem('anthropic_key');
   if (!key) {
-    statusEl.textContent = 'Enter and save your Anthropic API key first.';
+    statusEl.textContent = 'Save your Anthropic API key first';
     statusEl.className = 'status error';
     return;
   }
@@ -495,7 +585,7 @@ async function runQuery() {
   if (!query) return;
 
   searchBtn.disabled = true;
-  statusEl.textContent = 'Scoring across 37 attributes...';
+  statusEl.textContent = 'Scoring across 37 attributes\u2026';
   statusEl.className = 'status';
   resultsEl.innerHTML = '';
 
@@ -518,32 +608,27 @@ async function runQuery() {
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
-      throw new Error(err.error?.message || `API error ${response.status}`);
+      throw new Error(err.error?.message || 'API error ' + response.status);
     }
 
     const data = await response.json();
     const text = data.content?.[0]?.text;
-
     if (!text) throw new Error('Empty response from API.');
 
     let fonts;
     try {
       fonts = JSON.parse(text);
     } catch {
-      // Try extracting JSON from possible markdown wrapper
       const match = text.match(/\[[\s\S]*\]/);
-      if (match) {
-        fonts = JSON.parse(match[0]);
-      } else {
-        throw new Error('Could not parse font recommendations.');
-      }
+      if (match) fonts = JSON.parse(match[0]);
+      else throw new Error('Could not parse font recommendations.');
     }
 
     if (!Array.isArray(fonts) || fonts.length === 0) {
       throw new Error('No font recommendations returned.');
     }
 
-    statusEl.textContent = `${fonts.length} recommendations for "${query}"`;
+    statusEl.textContent = fonts.length + ' recommendations for \u201c' + escapeHTML(query) + '\u201d';
     renderResults(fonts, query);
 
   } catch (err) {
@@ -560,49 +645,37 @@ function renderResults(fonts, query) {
   fonts.forEach((font, i) => {
     const card = document.createElement('div');
     card.className = 'card';
-
     const fontFamily = font.name;
-    const fontId = `font-${i}`;
-    const attrId = `attr-${i}`;
+    const fontId = 'font-' + i;
+    const attrId = 'attr-' + i;
 
-    // Build attribute bars
     const scores = font.attribute_scores || {};
     let barsHTML = '';
     for (const [attr, score] of Object.entries(scores)) {
-      barsHTML += `
-        <div class="attr-bar-row">
-          <div class="attr-bar-label">${attr}</div>
-          <div class="attr-bar-track">
-            <div class="attr-bar-fill" style="width: ${score}%"></div>
-          </div>
-          <div class="attr-bar-value">${score}</div>
-        </div>`;
+      barsHTML += '<div class="attr-bar-row">'
+        + '<div class="attr-bar-label">' + escapeHTML(attr) + '</div>'
+        + '<div class="attr-bar-track"><div class="attr-bar-fill" style="width:' + score + '%"></div></div>'
+        + '<div class="attr-bar-value">' + score + '</div>'
+        + '</div>';
     }
 
-    // Build pills
     const pills = (font.dominant_attributes || [])
-      .map(a => `<span class="pill">${a}</span>`)
+      .map(a => '<span class="pill">' + escapeHTML(a) + '</span>')
       .join('');
 
-    card.innerHTML = `
-      <div class="card-specimen">
-        <div class="word loading" id="${fontId}" style="font-family: '${fontFamily}', sans-serif;">${escapeHTML(query)}</div>
-      </div>
-      <div class="card-body">
-        <div class="card-name">${escapeHTML(fontFamily)}</div>
-        <div class="card-rationale">${escapeHTML(font.rationale || '')}</div>
-        <div class="card-pills">${pills}</div>
-        <button class="attr-toggle" onclick="toggleAttr(this, '${attrId}')">
-          <span class="arrow">&#9654;</span> Attribute profile
-        </button>
-        <div class="attr-profile" id="${attrId}">
-          ${barsHTML}
-        </div>
-      </div>`;
+    card.innerHTML = '<div class="card-specimen">'
+      + '<div class="word loading" id="' + fontId + '" style="font-family:\'' + fontFamily + '\',sans-serif">' + escapeHTML(query) + '</div>'
+      + '</div>'
+      + '<div class="card-body">'
+      + '<div class="card-name">' + escapeHTML(fontFamily) + '</div>'
+      + '<div class="card-rationale">' + escapeHTML(font.rationale || '') + '</div>'
+      + '<div class="card-pills">' + pills + '</div>'
+      + '<button class="attr-toggle" onclick="toggleAttr(this,\'' + attrId + '\')">'
+      + '<span class="arrow">&#9654;</span> Attribute profile</button>'
+      + '<div class="attr-profile" id="' + attrId + '">' + barsHTML + '</div>'
+      + '</div>';
 
     resultsEl.appendChild(card);
-
-    // Load font dynamically
     loadFont(fontFamily, fontId);
   });
 }
@@ -612,26 +685,14 @@ function loadFont(fontName, elementId) {
   const encoded = fontName.replace(/ /g, '+');
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = `https://fonts.googleapis.com/css2?family=${encoded}:wght@400;700&display=swap`;
-
-  link.onload = () => {
-    // Give browser a moment to apply the font
-    document.fonts.ready.then(() => {
-      el.classList.remove('loading');
-    });
-  };
-
+  link.href = 'https://fonts.googleapis.com/css2?family=' + encoded + ':wght@400;700&display=swap';
+  link.onload = () => document.fonts.ready.then(() => el.classList.remove('loading'));
   link.onerror = () => {
     el.classList.remove('loading');
-    el.innerHTML = `<span class="font-error">Font "${fontName}" could not be loaded</span>`;
+    el.innerHTML = '<span class="font-error">Font \u201c' + fontName + '\u201d could not be loaded</span>';
   };
-
   document.head.appendChild(link);
-
-  // Timeout fallback in case fonts.ready doesn't fire for this specific font
-  setTimeout(() => {
-    el.classList.remove('loading');
-  }, 4000);
+  setTimeout(() => el.classList.remove('loading'), 4000);
 }
 
 function toggleAttr(btn, id) {
@@ -641,9 +702,9 @@ function toggleAttr(btn, id) {
 }
 
 function escapeHTML(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
 }
 </script>
 
