@@ -51,12 +51,16 @@ export async function queryFontologist(
   apiKey: string,
   word: string
 ): Promise<FontRecommendation[]> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "x-api-key": apiKey,
       "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true",
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-20250514",
@@ -64,7 +68,10 @@ export async function queryFontologist(
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: word }],
     }),
+    signal: controller.signal,
   });
+
+  clearTimeout(timeout);
 
   if (!response.ok) {
     const err = await response.json().catch(() => ({}));

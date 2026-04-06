@@ -1,19 +1,14 @@
 /**
- * The Fontologist — Canva App Entry Point
+ * The Fontologist — Canva App
  * by Equinox Design
- *
- * Prerequisites:
- *   1. Register at https://www.canva.dev and create an app
- *   2. Run: npx @canva/cli init
- *   3. npm install && npm start
  */
 
 import { useState } from "react";
+import { Button, Rows, Text, TextInput, Title, Columns, Box } from "@canva/app-ui-kit";
+import { addElementAtCursor, addElementAtPoint } from "@canva/design";
+import { useFeatureSupport } from "@canva/app-hooks";
 import { queryFontologist, FontRecommendation } from "./fontologist-engine";
 import "./styles/theme.css";
-
-// NOTE: For Canva Marketplace, API calls go through a backend proxy
-// (Cloudflare Worker) that holds the API key. Users never see a key input.
 
 export function App() {
   const [apiKey, setApiKey] = useState(() => sessionStorage.getItem("fontologist_key") || "");
@@ -22,6 +17,9 @@ export function App() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [keySaved, setKeySaved] = useState(!!sessionStorage.getItem("fontologist_key"));
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+  const isSupported = useFeatureSupport();
 
   const saveKey = () => {
     if (!apiKey.trim()) return;
@@ -44,26 +42,57 @@ export function App() {
 
     try {
       const fonts = await queryFontologist(key, query.trim());
+      // Load Google Fonts for preview
+      const families = fonts.map((f) => f.name.replace(/ /g, "+")).join("&family=");
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = `https://fonts.googleapis.com/css2?family=${families}&display=swap`;
+      document.head.appendChild(link);
+
       setResults(fonts);
       setStatus(`${fonts.length} typefaces for \u201c${query}\u201d`);
-    } catch (err) {
-      setStatus((err as Error).message);
+    } catch (err: any) {
+      const msg = err?.name === "AbortError"
+        ? "Request timed out. Try again."
+        : err?.message || "Something went wrong.";
+      setStatus(msg);
     } finally {
       setLoading(false);
     }
   };
 
-  const applyFont = async (fontName: string) => {
-    // Canva design API integration:
-    // import { addNativeElement } from "@canva/design";
-    // await addNativeElement({ type: "TEXT", children: [query], fontFamily: fontName });
-    console.log("Apply font:", fontName);
+  const applyFont = async (font: FontRecommendation) => {
+    try {
+      if (isSupported(addElementAtCursor)) {
+        await addElementAtCursor({
+          type: "text",
+          children: [query || font.name],
+          fontWeight: "normal",
+          fontStyle: "normal",
+          decoration: "none",
+          textAlign: "start",
+        });
+      } else {
+        await addElementAtPoint({
+          type: "text",
+          children: [query || font.name],
+          top: 100,
+          left: 100,
+          width: 400,
+          fontWeight: "normal",
+          fontStyle: "normal",
+          decoration: "none",
+          textAlign: "start",
+        });
+      }
+    } catch (err: any) {
+      setStatus("Could not add to design: " + (err?.message || "unknown error"));
+    }
   };
 
   return (
     <div className="fontologist-panel">
       <div className="fontologist-header">
-        <img src="images/fontologist-logo.png" alt="The Fontologist" className="fontologist-icon" />
         <h2>The <em>Fontologist</em></h2>
         <p>Describe your vision. Get the perfect typeface.</p>
       </div>
@@ -103,7 +132,7 @@ export function App() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleQuery()}
-          placeholder="A word, a mood, a concept..."
+          placeholder="A word, a mood, a concept\u2026"
           style={{
             flex: 1,
             background: "rgba(0,0,0,0.25)",
@@ -123,7 +152,7 @@ export function App() {
           onClick={handleQuery}
           disabled={loading}
         >
-          Find Fonts
+          {loading ? "..." : "Find Fonts"}
         </button>
       </div>
 
@@ -150,7 +179,29 @@ export function App() {
                 <span key={q} className="fontologist-pill">{q}</span>
               ))}
             </div>
-            <button className="fontologist-apply-btn" onClick={() => applyFont(font.name)}>
+
+            {/* Expandable match detail */}
+            <div
+              style={{ cursor: "pointer", marginTop: 8, fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}
+              onClick={() => setExpandedCard(expandedCard === i ? null : i)}
+            >
+              {expandedCard === i ? "\u25B2" : "\u25BC"} Match detail
+            </div>
+            {expandedCard === i && (
+              <div style={{ marginTop: 6 }}>
+                {Object.entries(font.match_strength).map(([key, val]) => (
+                  <div key={key} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
+                    <span style={{ fontSize: 8, color: "rgba(255,255,255,0.4)", width: 70, textTransform: "uppercase", letterSpacing: "0.05em" }}>{key}</span>
+                    <div style={{ flex: 1, height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 2 }}>
+                      <div style={{ width: `${val}%`, height: "100%", background: "rgba(255,255,255,0.25)", borderRadius: 2 }} />
+                    </div>
+                    <span style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", width: 20, textAlign: "right" }}>{val}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <button className="fontologist-apply-btn" onClick={() => applyFont(font)}>
               Apply to Design
             </button>
           </div>
