@@ -1,0 +1,50 @@
+{
+  "app_name": {
+    "value": "The Fontologist",
+    "description": "The name of the app displayed in the Canva marketplace"
+  },
+  "search_placeholder": {
+    "value": "A word, a mood, a concept...",
+    "description": "Placeholder text in the main search input field"
+  },
+  "find_fonts_button": {
+    "value": "Find Fonts",
+    "description": "Label for the button that triggers font search"
+  },
+  "save_key_button": {
+    "value": "Save Key",
+    "description": "Label for the button that saves the API key"
+  },
+  "api_key_placeholder": {
+    "value": "API key",
+    "description": "Placeholder text for the API key input field"
+  },
+  "apply_to_design": {
+    "value": "Apply to Design",
+    "description": "Button label to apply a recommended font to the current Canva design"
+  },
+  "match_detail": {
+    "value": "Match detail",
+    "description": "Label for the collapsible section showing how well a font matches the input"
+  },
+  "reading_meaning": {
+    "value": "Reading the meaning...",
+    "description": "Status message shown while the app is processing the user's input"
+  },
+  "typefaces_for": {
+    "value": "typefaces for",
+    "description": "Part of the results status message, e.g. '5 typefaces for elegance'"
+  },
+  "enter_api_key": {
+    "value": "Enter your API key first",
+    "description": "Error message when no API key is saved"
+  },
+  "saved": {
+    "value": "Saved",
+    "description": "Confirmation shown after API key is saved"
+  },
+  "tagline": {
+    "value": "Describe your vision. Get the perfect typeface.",
+    "description": "App tagline shown in the header"
+  }
+}
