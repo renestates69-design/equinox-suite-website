@@ -493,14 +493,19 @@ body {
   <div class="app-side">
 
     <div class="glass-panel">
-      <div class="api-key-row">
-        <input type="password" id="apiKeyInput" placeholder="API key" autocomplete="off">
-        <button class="btn-glass" id="saveKeyBtn" onclick="saveKey()">Save Key</button>
-      </div>
       <div class="search-row">
         <input type="text" id="queryInput" placeholder="A word, a mood, a concept..." autofocus>
         <button class="btn-glass" id="searchBtn" onclick="runQuery()">Find Fonts</button>
       </div>
+    </div>
+
+    <!-- Hidden API key config — click gear icon to reveal -->
+    <div style="text-align:right; margin:-12px 0 8px;">
+      <button onclick="document.getElementById('apiConfig').style.display=document.getElementById('apiConfig').style.display==='none'?'flex':'none'" style="background:none;border:none;cursor:pointer;font-size:14px;color:var(--text-faint);opacity:0.4;">&#9881;</button>
+    </div>
+    <div class="api-key-row" id="apiConfig" style="display:none; margin-bottom:16px;">
+      <input type="password" id="apiKeyInput" placeholder="API key (beta)" autocomplete="off">
+      <button class="btn-glass" id="saveKeyBtn" onclick="saveKey()">Save</button>
     </div>
 
     <div class="status" id="status"></div>
