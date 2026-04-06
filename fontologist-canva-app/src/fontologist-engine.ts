@@ -1,6 +1,10 @@
 /**
  * The Fontologist — Scoring Engine
  * Internal logic only. No methodology is exposed to the end user.
+ *
+ * Two modes:
+ * - BETA: User provides their own API key, calls Anthropic directly
+ * - PRODUCTION: Calls our Cloudflare Worker backend (no key needed)
  */
 
 export interface FontRecommendation {
@@ -9,6 +13,9 @@ export interface FontRecommendation {
   rationale: string;
   match_strength: Record<string, number>;
 }
+
+// Production backend URL — update after deploying the Cloudflare Worker
+const BACKEND_URL = "https://fontologist-api.equinox-suite.com";
 
 const SYSTEM_PROMPT = `You are a semantic typography engine trained on the FontCLIP attribute framework (Tatsukawa et al., 2024) and the O'Donovan crowdsourced font attribute dataset (2014).
 
@@ -47,10 +54,36 @@ Include only the top 3–5 match strengths that drove the selection.
 
 Return ONLY the JSON array. Nothing else.`;
 
-export async function queryFontologist(
-  apiKey: string,
-  word: string
-): Promise<FontRecommendation[]> {
+/**
+ * Query via Cloudflare Worker backend (production).
+ * No API key needed — the backend holds it.
+ */
+async function queryViaBackend(word: string): Promise<FontRecommendation[]> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+
+  const response = await fetch(BACKEND_URL + "/api/query", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: word }),
+    signal: controller.signal,
+  });
+
+  clearTimeout(timeout);
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({})) as any;
+    throw new Error(err.message || err.error || "API error " + response.status);
+  }
+
+  const data = await response.json() as any;
+  return data.fonts;
+}
+
+/**
+ * Query Anthropic directly (beta — user provides their own key).
+ */
+async function queryDirect(apiKey: string, word: string): Promise<FontRecommendation[]> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 30000);
 
@@ -92,4 +125,20 @@ export async function queryFontologist(
     if (match) return JSON.parse(match[0]);
     throw new Error("Could not parse recommendations.");
   }
+}
+
+/**
+ * Main entry point. Uses backend if available, falls back to direct API call.
+ */
+export async function queryFontologist(
+  apiKey: string,
+  word: string
+): Promise<FontRecommendation[]> {
+  // If user provided their own key (beta mode), use direct API
+  if (apiKey && apiKey.startsWith("sk-ant-")) {
+    return queryDirect(apiKey, word);
+  }
+
+  // Otherwise try the backend
+  return queryViaBackend(word);
 }

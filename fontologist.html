@@ -474,10 +474,12 @@ body {
 
   <!-- Header -->
   <div class="header">
-    <div class="header-logo">
-      <img src="images/fontologist-logo.png" alt="The Fontologist">
+    <div class="header-logo" id="headerLogo">
+      <img src="images/fontologist-logo.png" alt="The Fontologist" onerror="this.parentElement.style.display='none'">
     </div>
-    <h1><img src="images/fontologist-title.png" alt="The Fontologist" class="title-img"></h1>
+    <h1 id="headerTitle">
+      <img src="images/fontologist-title.png" alt="The Fontologist" class="title-img" onerror="this.outerHTML='<span style=\'font-family:The Seasons,Cormorant Garamond,serif;font-weight:300;font-size:32px;letter-spacing:0.08em;color:var(--silver)\'>The <em>Fontologist</em></span>'">
+    </h1>
     <div class="tagline">Describe your vision. Get the perfect typeface.</div>
     <div class="byline">by Equinox Design</div>
   </div>
