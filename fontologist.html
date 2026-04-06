@@ -53,81 +53,108 @@ html, body {
 body {
   background: var(--dark-gradient);
   background-attachment: fixed;
+  min-height: 100vh;
+  padding: 48px 40px 40px;
+}
+
+/* ---- Two-column layout ---- */
+.scene {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+  min-height: calc(100vh - 88px);
+}
+
+/* ---- Left: Brand column ---- */
+.brand-side {
+  width: 340px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 48px 20px 40px;
-}
-
-.container {
-  width: 100%;
-  max-width: 760px;
-}
-
-/* ---- Header ---- */
-.header {
   text-align: center;
-  margin-bottom: 40px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--glass-border-dim);
+  gap: 20px;
+  padding-top: 60px;
 }
 
-.header-logo {
-  width: 160px;
-  height: 160px;
-  margin: 0 auto 28px;
-  border-radius: 24px;
+.brand-logo {
+  width: 200px;
+  height: 200px;
+  border-radius: 40px;
   overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+  box-shadow: 0 16px 60px rgba(0,0,0,0.4);
 }
 
-.header-logo img {
-  width: 100%;
-  height: 100%;
+.brand-logo img {
+  width: 130%;
+  height: 130%;
   object-fit: cover;
+  display: block;
+  margin: -15% 0 0 -15%;
 }
 
-.header h1 {
-  margin-bottom: 8px;
+.brand-title {
+  line-height: 1.1;
 }
 
-.title-img {
+.brand-title img {
   height: 56px;
   width: auto;
   filter: invert(1) brightness(0.88);
   opacity: 0.92;
 }
 
-.header .tagline {
-  font-family: var(--font-body);
-  font-size: 11px;
+.brand-title-text {
+  font-family: 'The Seasons', 'Cormorant Garamond', serif;
   font-weight: 300;
-  color: var(--text-faint);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: 38px;
+  letter-spacing: 0.08em;
+  color: var(--silver);
 }
 
-.header .byline {
-  font-family: var(--font-body);
-  font-size: 9px;
+.brand-title-text em {
+  font-style: italic;
   font-weight: 400;
-  color: var(--text-faint);
-  letter-spacing: 0.15em;
+}
+
+.brand-tagline {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  margin-top: 6px;
-  opacity: 0.7;
+  color: var(--text-faint);
+  line-height: 1.8;
+}
+
+.brand-byline {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  opacity: 0.6;
+}
+
+/* ---- Right: App column ---- */
+.app-side {
+  flex: 1;
+  min-width: 0;
+  padding-top: 20px;
 }
 
 /* ---- Glass panel ---- */
 .glass-panel {
   background: var(--glass);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
+  border-radius: 14px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  padding: 28px;
-  margin-bottom: 24px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.2);
 }
 
@@ -135,15 +162,15 @@ body {
 .api-key-row {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .api-key-row input {
   flex: 1;
   background: rgba(0,0,0,0.25);
   border: 1px solid var(--glass-border-dim);
-  border-radius: 6px;
-  padding: 10px 14px;
+  border-radius: 8px;
+  padding: 12px 16px;
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 300;
@@ -153,21 +180,16 @@ body {
   letter-spacing: 0.03em;
 }
 
-.api-key-row input:focus {
-  border-color: var(--glass-border);
-}
-
-.api-key-row input::placeholder {
-  color: var(--text-faint);
-}
+.api-key-row input:focus { border-color: var(--glass-border); }
+.api-key-row input::placeholder { color: var(--text-faint); }
 
 .btn-glass {
   background: var(--glass);
   border: 1px solid var(--glass-border);
-  border-radius: 6px;
-  padding: 10px 18px;
+  border-radius: 8px;
+  padding: 12px 22px;
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -184,9 +206,7 @@ body {
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
-.btn-glass:active {
-  transform: scale(0.98);
-}
+.btn-glass:active { transform: scale(0.98); }
 
 .btn-glass.saved {
   border-color: rgba(120,200,160,0.4);
@@ -203,10 +223,10 @@ body {
   flex: 1;
   background: rgba(0,0,0,0.25);
   border: 1px solid var(--glass-border-dim);
-  border-radius: 8px;
-  padding: 16px 20px;
+  border-radius: 10px;
+  padding: 18px 22px;
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 300;
   color: var(--silver-light);
   outline: none;
@@ -214,58 +234,47 @@ body {
   letter-spacing: 0.02em;
 }
 
-.search-row input:focus {
-  border-color: var(--glass-border);
-}
-
-.search-row input::placeholder {
-  color: var(--text-faint);
-  font-weight: 200;
-}
+.search-row input:focus { border-color: var(--glass-border); }
+.search-row input::placeholder { color: var(--text-faint); font-weight: 200; }
 
 .search-row .btn-glass {
-  padding: 16px 28px;
-  font-size: 11px;
-  border-radius: 8px;
+  padding: 18px 32px;
+  font-size: 12px;
+  border-radius: 10px;
 }
 
-.search-row .btn-glass:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
+.search-row .btn-glass:disabled { opacity: 0.35; cursor: not-allowed; }
 
 /* ---- Status ---- */
 .status {
-  font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 300;
   color: var(--text-faint);
   text-align: center;
-  margin: 20px 0 8px;
+  margin: 16px 0 8px;
   min-height: 18px;
   letter-spacing: 0.04em;
 }
 
-.status.error {
-  color: rgba(200,100,100,0.8);
-}
+.status.error { color: rgba(200,100,100,0.8); }
 
 /* ---- Results ---- */
 .results {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .card {
   background: var(--glass);
   border: 1px solid var(--glass-border-dim);
-  border-radius: 12px;
+  border-radius: 14px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   overflow: hidden;
   transition: border-color 0.25s, box-shadow 0.25s;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: flex;
 }
 
 .card:hover {
@@ -274,26 +283,25 @@ body {
 }
 
 .card-specimen {
-  padding: 44px 24px;
+  width: 280px;
+  flex-shrink: 0;
+  padding: 32px 20px;
   text-align: center;
-  border-bottom: 1px solid var(--glass-border-dim);
-  min-height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(0,0,0,0.12);
+  border-right: 1px solid var(--glass-border-dim);
 }
 
 .card-specimen .word {
-  font-size: 56px;
+  font-size: 42px;
   line-height: 1.2;
   color: var(--silver-light);
   transition: opacity 0.4s;
 }
 
-.card-specimen .word.loading {
-  opacity: 0.15;
-}
+.card-specimen .word.loading { opacity: 0.15; }
 
 .card-specimen .font-error {
   font-family: var(--font-body);
@@ -303,37 +311,38 @@ body {
 }
 
 .card-body {
-  padding: 22px 24px 24px;
+  padding: 20px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card-name {
-  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-dim);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .card-rationale {
-  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 300;
   line-height: 1.7;
   color: var(--text-dim);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .card-pills {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .pill {
-  font-family: var(--font-body);
   font-size: 9px;
   font-weight: 400;
   letter-spacing: 0.1em;
@@ -347,7 +356,6 @@ body {
 
 /* ---- Collapsible match detail ---- */
 .attr-toggle {
-  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.12em;
@@ -363,28 +371,12 @@ body {
   transition: color 0.2s;
 }
 
-.attr-toggle:hover {
-  color: var(--text-dim);
-}
+.attr-toggle:hover { color: var(--text-dim); }
+.attr-toggle .arrow { display: inline-block; transition: transform 0.2s; font-size: 8px; }
+.attr-toggle.open .arrow { transform: rotate(90deg); }
 
-.attr-toggle .arrow {
-  display: inline-block;
-  transition: transform 0.2s;
-  font-size: 8px;
-}
-
-.attr-toggle.open .arrow {
-  transform: rotate(90deg);
-}
-
-.attr-profile {
-  display: none;
-  padding-top: 14px;
-}
-
-.attr-profile.open {
-  display: block;
-}
+.attr-profile { display: none; padding-top: 14px; }
+.attr-profile.open { display: block; }
 
 .attr-bar-row {
   display: flex;
@@ -394,7 +386,6 @@ body {
 }
 
 .attr-bar-label {
-  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 300;
   color: var(--text-faint);
@@ -420,7 +411,6 @@ body {
 }
 
 .attr-bar-value {
-  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 300;
   color: var(--text-faint);
@@ -446,7 +436,6 @@ body {
 }
 
 .footer-sub {
-  font-family: var(--font-body);
   font-size: 9px;
   font-weight: 300;
   color: var(--text-faint);
@@ -455,57 +444,74 @@ body {
 }
 
 /* ---- Responsive ---- */
-@media (max-width: 560px) {
-  body { padding: 24px 12px 32px; }
-  .glass-panel { padding: 20px 16px; }
+@media (max-width: 900px) {
+  body { padding: 24px 16px 32px; }
+  .scene {
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+  .brand-side {
+    width: 100%;
+    position: static;
+    padding-top: 0;
+  }
+  .brand-logo { width: 140px; height: 140px; border-radius: 28px; }
+  .brand-title-text { font-size: 30px; }
+  .app-side { width: 100%; padding-top: 0; }
+  .card { flex-direction: column; }
+  .card-specimen {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--glass-border-dim);
+    padding: 28px 16px;
+  }
   .card-specimen .word { font-size: 36px; }
-  .card-specimen { padding: 28px 16px; }
   .card-body { padding: 16px; }
-  .header h1 { font-size: 28px; }
-  .header-logo { width: 60px; height: 60px; }
-  .footer { flex-direction: column; text-align: center; }
-  .api-key-row { flex-direction: column; }
-  .search-row { flex-direction: column; }
+  .api-key-row, .search-row { flex-direction: column; }
+  .glass-panel { padding: 20px 16px; }
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="scene">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="header-logo" id="headerLogo">
+  <!-- Left: Brand -->
+  <div class="brand-side">
+    <div class="brand-logo">
       <img src="images/fontologist-logo.png" alt="The Fontologist" onerror="this.parentElement.style.display='none'">
     </div>
-    <h1 id="headerTitle">
-      <img src="images/fontologist-title.png" alt="The Fontologist" class="title-img" onerror="this.outerHTML='<span style=\'font-family:The Seasons,Cormorant Garamond,serif;font-weight:300;font-size:44px;letter-spacing:0.08em;color:var(--silver)\'>The <em>Fontologist</em></span>'">
-    </h1>
-    <div class="tagline">Describe your vision. Get the perfect typeface.</div>
-    <div class="byline">by Equinox Design</div>
+    <div class="brand-title">
+      <img src="images/fontologist-title.png" alt="The Fontologist" style="height:56px;width:auto;filter:invert(1) brightness(0.88);opacity:0.92" onerror="this.outerHTML='<span class=brand-title-text>The <em>Fontologist</em></span>'">
+    </div>
+    <div class="brand-tagline">Describe a feeling.<br>Find the typeface that carries it.</div>
+    <div class="brand-byline">by Equinox Design</div>
   </div>
 
-  <!-- Input panel -->
-  <div class="glass-panel">
-    <div class="api-key-row">
-      <input type="password" id="apiKeyInput" placeholder="API key" autocomplete="off">
-      <button class="btn-glass" id="saveKeyBtn" onclick="saveKey()">Save Key</button>
+  <!-- Right: App -->
+  <div class="app-side">
+
+    <div class="glass-panel">
+      <div class="api-key-row">
+        <input type="password" id="apiKeyInput" placeholder="API key" autocomplete="off">
+        <button class="btn-glass" id="saveKeyBtn" onclick="saveKey()">Save Key</button>
+      </div>
+      <div class="search-row">
+        <input type="text" id="queryInput" placeholder="A word, a mood, a concept..." autofocus>
+        <button class="btn-glass" id="searchBtn" onclick="runQuery()">Find Fonts</button>
+      </div>
     </div>
-    <div class="search-row">
-      <input type="text" id="queryInput" placeholder="A word, a mood, a concept..." autofocus>
-      <button class="btn-glass" id="searchBtn" onclick="runQuery()">Find Fonts</button>
+
+    <div class="status" id="status"></div>
+
+    <div class="results" id="results"></div>
+
+    <div class="footer">
+      <div class="footer-brand">The Fontologist</div>
+      <div class="footer-sub">AI-powered font intelligence by Equinox Design</div>
     </div>
-  </div>
 
-  <div class="status" id="status"></div>
-
-  <!-- Results -->
-  <div class="results" id="results"></div>
-
-  <!-- Footer -->
-  <div class="footer">
-    <div class="footer-brand">The Fontologist</div>
-    <div class="footer-sub">AI-powered font intelligence by Equinox Design</div>
   </div>
 
 </div>
@@ -542,8 +548,6 @@ queryInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') runQuery();
 });
 
-// The scoring methodology stays hidden — this is the secret sauce.
-// User never sees attribute names, framework references, or scoring method.
 const SYSTEM_PROMPT = `You are a semantic typography engine trained on the FontCLIP attribute framework (Tatsukawa et al., 2024) and the O'Donovan crowdsourced font attribute dataset (2014).
 
 You operate across 37 typographic attributes divided into two categories:
@@ -551,12 +555,12 @@ You operate across 37 typographic attributes divided into two categories:
 STRUCTURAL / FORMAL ATTRIBUTES:
 serif, sans-serif, italic, cursive, monospace, capitals, display, thin, bold, condensed, extended, geometric, humanist, rounded, angular, high-contrast, low-contrast, decorative, script
 
-PERCEPTUAL / EMOTIONAL ATTRIBUTES (scored 0–100):
+PERCEPTUAL / EMOTIONAL ATTRIBUTES (scored 0\u2013100):
 friendly, warm, happy, elegant, dramatic, legible, calm, corporate, playful, feminine, masculine, modern, retro/vintage, luxurious, technical, organic, rigid, delicate, strong, authoritative, trustworthy, creative, formal, casual, energetic
 
 For each input word or phrase:
 
-1. Internally score the word across all 37 attributes, identifying the 5–8 most dominant dimensions.
+1. Internally score the word across all 37 attributes, identifying the 5\u20138 most dominant dimensions.
 2. When the input is abstract, emotional, or conceptual, weight perceptual/emotional attributes more heavily than structural ones.
 3. Use the dominant attributes to reason toward 5 specific Google Fonts whose typographic character best matches that attribute profile.
 4. Choose only real, currently available Google Fonts. Prefer well-known, widely used fonts.
@@ -567,7 +571,7 @@ Each object schema:
 {
   "name": "<Google Font name exactly as listed on fonts.google.com>",
   "qualities": ["<quality1>", "<quality2>", "<quality3>", "<quality4>", "<quality5>"],
-  "rationale": "<One sentence explaining why this typeface suits the input — reference the feeling and character of the font, NOT the scoring method or attributes by name.>",
+  "rationale": "<One sentence explaining why this typeface suits the input \u2014 reference the feeling and character of the font, NOT the scoring method or attributes by name.>",
   "match_strength": {
     "<quality1>": <score 0-100>,
     "<quality2>": <score 0-100>,
@@ -575,9 +579,9 @@ Each object schema:
   }
 }
 
-IMPORTANT: In "qualities" and "rationale", use natural descriptive language — words like "refined", "grounded", "fluid", "structured", etc. Do NOT use technical attribute names from the scoring system. The user should feel like they're getting expert typographic intuition, not a technical readout.
+IMPORTANT: In "qualities" and "rationale", use natural descriptive language \u2014 words like "refined", "grounded", "fluid", "structured", etc. Do NOT use technical attribute names from the scoring system. The user should feel like they\u2019re getting expert typographic intuition, not a technical readout.
 
-Include only the top 3–5 match strengths that drove the selection.
+Include only the top 3\u20135 match strengths that drove the selection.
 
 Return ONLY the JSON array. Nothing else.`;
 
@@ -657,7 +661,6 @@ function renderResults(fonts, query) {
     const fontId = 'font-' + i;
     const attrId = 'attr-' + i;
 
-    // Use "match_strength" (hidden scoring) for the bar chart
     const scores = font.match_strength || font.attribute_scores || {};
     let barsHTML = '';
     for (const [label, score] of Object.entries(scores)) {
@@ -668,7 +671,6 @@ function renderResults(fonts, query) {
         + '</div>';
     }
 
-    // Use "qualities" (natural language) for pills
     const qualities = font.qualities || font.dominant_attributes || [];
     const pills = qualities
       .map(a => '<span class="pill">' + escapeHTML(a) + '</span>')
