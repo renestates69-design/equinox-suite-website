@@ -168,10 +168,14 @@ a { color: inherit; text-decoration: none; }
 .section-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
   gap: 24px 80px;
   width: 700px;
   position: relative;
+}
+.section-buttons .section-btn:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: 310px;
+  margin: 0 auto;
 }
 .section-btn {
   display: flex;
